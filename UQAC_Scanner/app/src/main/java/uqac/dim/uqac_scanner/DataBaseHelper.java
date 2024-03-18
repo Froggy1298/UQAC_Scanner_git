@@ -14,6 +14,7 @@ import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String QR_TABLE = "QR_TABLE";
+    public static final String QR_ID = "ID";
     public static final String COLUMN_QR_NAME = "QR_NAME";
     public static final String COLUMN_QR_URL = "QR_URL";
     public static final String COLUMN_QR_DESCRIPTION = "QR_DESCRIPTION";
@@ -26,7 +27,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + QR_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_QR_NAME + " TEXT, " + COLUMN_QR_URL + " TEXT, " +
+        String createTableStatement = "CREATE TABLE " + QR_TABLE + " ( " + QR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_QR_NAME + " TEXT, " + COLUMN_QR_URL + " TEXT, " +
                 COLUMN_QR_DESCRIPTION + " TEXT, " + COLUMN_QR_DATE_CREATE + " DATE, " + COLUMN_QR_DATE_EDIT + " DATE, " + COLUMN_QR_IS_SCANNED +" BOOL)";
         db.execSQL(createTableStatement);
     }
@@ -36,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean addQR(QrCodeModel qrCodeModel) {
+    public boolean addCreatedQR(QrCodeModel qrCodeModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -74,5 +75,65 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return returnList;
+    }
+
+    public List<QrCodeModel> getScannedQR() {
+        List<QrCodeModel> returnList = new ArrayList<>();
+        String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + " = " + true;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int qrID = cursor.getInt(0);
+                String qrName = cursor.getString(1);
+                String qrUrl = cursor.getString(2);
+                String qrDesc = cursor.getString(3);
+                Date qrDateCreate = new Date(cursor.getLong(4)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(4)*1000);
+                boolean qrIsScanned = cursor.getInt(6) == 1;
+
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc,qrDateCreate,qrDateEdit,qrIsScanned));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public List<QrCodeModel> getCreatedQR() {
+        List<QrCodeModel> returnList = new ArrayList<>();
+        String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + " = " + false;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int qrID = cursor.getInt(0);
+                String qrName = cursor.getString(1);
+                String qrUrl = cursor.getString(2);
+                String qrDesc = cursor.getString(3);
+                Date qrDateCreate = new Date(cursor.getLong(4)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(4)*1000);
+                boolean qrIsScanned = cursor.getInt(6) == 1;
+
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc,qrDateCreate,qrDateEdit,qrIsScanned));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public boolean deleteQRCode(Integer id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query  = "DELETE FROM "+ QR_TABLE + " WHERE " + QR_ID + "=" + id;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) {
+            return true;
+        }
+        cursor.close();
+        db.close();
+        return false;
     }
 }
