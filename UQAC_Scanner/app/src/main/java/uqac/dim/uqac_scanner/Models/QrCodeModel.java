@@ -1,4 +1,4 @@
-package uqac.dim.uqac_scanner;
+package uqac.dim.uqac_scanner.Models;
 
 import java.util.Date;
 

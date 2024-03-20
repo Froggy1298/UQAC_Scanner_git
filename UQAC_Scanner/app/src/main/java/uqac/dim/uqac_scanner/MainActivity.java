@@ -3,11 +3,13 @@ package uqac.dim.uqac_scanner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
+import uqac.dim.uqac_scanner.Models.QrCodeModel;
 
 public class MainActivity extends AppCompatActivity {
 

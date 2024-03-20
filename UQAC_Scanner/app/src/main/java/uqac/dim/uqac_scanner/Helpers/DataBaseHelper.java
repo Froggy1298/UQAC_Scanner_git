@@ -1,4 +1,4 @@
-package uqac.dim.uqac_scanner;
+package uqac.dim.uqac_scanner.Helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import uqac.dim.uqac_scanner.Models.QrCodeModel;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String QR_TABLE = "QR_TABLE";
