@@ -103,6 +103,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    //isScanned = 0 = False = The code QR was created
+    //isScanned = 1 = True = The code QR was scanned
     public QrCodeModel getQR(Integer id) {
         QrCodeModel returnQR = new QrCodeModel();
         String query = "SELECT * FROM " + QR_TABLE + " WHERE " + QR_ID+ "=" + id;

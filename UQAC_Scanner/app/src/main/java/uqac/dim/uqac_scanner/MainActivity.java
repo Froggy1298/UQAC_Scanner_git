@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import uqac.dim.uqac_scanner.CreateFolder.Create;
 import uqac.dim.uqac_scanner.HistoryFolder.History;
 import uqac.dim.uqac_scanner.ScannerFolder.Scanner;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -23,12 +24,15 @@ import uqac.dim.uqac_scanner.Models.QrCodeModel;
 
 public class MainActivity extends AppCompatActivity {
 
+    private DataBaseHelper dataBaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+        dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
         Date today =  Calendar.getInstance().getTime();
         byte[] image = new byte[6];
 
@@ -66,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Scanner(), true);
     }
-
+    
     public boolean onNavigationItemSelected(MenuItem item)
     {
         try {
