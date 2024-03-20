@@ -1,4 +1,4 @@
-package uqac.dim.uqac_scanner;
+package uqac.dim.uqac_scanner.CreateFolder;
 
 import android.os.Bundle;
 
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import uqac.dim.uqac_scanner.R;
 
 public class Create extends Fragment {
 

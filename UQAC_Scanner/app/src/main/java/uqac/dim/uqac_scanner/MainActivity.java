@@ -13,6 +13,10 @@ import android.view.View;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import uqac.dim.uqac_scanner.CreateFolder.Create;
+import uqac.dim.uqac_scanner.HistoryFolder.History;
+import uqac.dim.uqac_scanner.ScannerFolder.Scanner;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
