@@ -104,7 +104,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     //isScanned = 1 = The code QR was scanned
     public List<QrCodeModel> getListQR(int isScanned) {
         List<QrCodeModel> returnList = new ArrayList<>();
-        String test = String.valueOf(isScanned);
         String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + "=" + isScanned;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
