@@ -10,6 +10,9 @@ public class QrCodeModel {
     private  byte[] codeQR;
     private Date dateCreation;
     private Date dateEdit;
+
+    //True = the QR code was scanned by the user
+    //False = the QR code was created by the user
     private boolean isScanned;
     public QrCodeModel(){}
     public QrCodeModel(String name, String url, String description, byte[] codeQR, Date dateCreation, Date dateEdit, boolean isScanned){
@@ -71,11 +74,11 @@ public class QrCodeModel {
         this.dateEdit = dateEdit;
     }
 
-    public boolean isScanned() {
+    public boolean getIsScanned() {
         return isScanned;
     }
 
-    public void setScanned(boolean scanned) {
+    public void setIsScanned(boolean scanned) {
         isScanned = scanned;
     }
 
