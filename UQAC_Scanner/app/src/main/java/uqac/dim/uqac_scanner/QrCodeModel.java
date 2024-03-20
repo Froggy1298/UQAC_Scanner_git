@@ -7,24 +7,26 @@ public class QrCodeModel {
     private String name;
     private String url;
     private String description;
-    //private  codeQR;
+    private  byte[] codeQR;
     private Date dateCreation;
     private Date dateEdit;
     private boolean isScanned;
     public QrCodeModel(){}
-    public QrCodeModel(String name, String url, String description, Date dateCreation, Date dateEdit, boolean isScanned){
+    public QrCodeModel(String name, String url, String description, byte[] codeQR, Date dateCreation, Date dateEdit, boolean isScanned){
         this.name = name;
         this.url = url;
         this.description = description;
+        this.codeQR = codeQR;
         this.dateCreation = dateCreation;
         this.dateEdit = dateEdit;
         this.isScanned = isScanned;
     }
-    public QrCodeModel(Integer id, String name, String url, String description, Date dateCreation, Date dateEdit, boolean isScanned) {
+    public QrCodeModel(Integer id, String name, String url, String description, byte[] codeQR, Date dateCreation, Date dateEdit, boolean isScanned) {
         this.ID = id;
         this.name = name;
         this.url = url;
         this.description = description;
+        this.codeQR = codeQR;
         this.dateCreation = dateCreation;
         this.dateEdit = dateEdit;
         this.isScanned = isScanned;
@@ -83,5 +85,13 @@ public class QrCodeModel {
 
     public void setID(Integer ID) {
         this.ID = ID;
+    }
+
+    public byte[] getCodeQR() {
+        return codeQR;
+    }
+
+    public void setCodeQR(byte[] codeQR) {
+        this.codeQR = codeQR;
     }
 }

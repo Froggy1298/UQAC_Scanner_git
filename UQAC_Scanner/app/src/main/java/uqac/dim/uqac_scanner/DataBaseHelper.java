@@ -18,6 +18,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_QR_NAME = "QR_NAME";
     public static final String COLUMN_QR_URL = "QR_URL";
     public static final String COLUMN_QR_DESCRIPTION = "QR_DESCRIPTION";
+    public static final String COLUMN_QR_IMAGE = "QR_IMAGE";
     public static final String COLUMN_QR_DATE_CREATE = "QR_DATE_CREATE";
     public static final String COLUMN_QR_DATE_EDIT = "QR_DATE_EDIT";
     public static final String COLUMN_QR_IS_SCANNED = "QR_IS_SCANNED";
@@ -28,13 +29,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableStatement = "CREATE TABLE " + QR_TABLE + " ( " + QR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_QR_NAME + " TEXT, " + COLUMN_QR_URL + " TEXT, " +
-                COLUMN_QR_DESCRIPTION + " TEXT, " + COLUMN_QR_DATE_CREATE + " DATE, " + COLUMN_QR_DATE_EDIT + " DATE, " + COLUMN_QR_IS_SCANNED +" BOOL)";
+                COLUMN_QR_DESCRIPTION + " TEXT, " + COLUMN_QR_IMAGE + " BLOB, " + COLUMN_QR_DATE_CREATE + " DATE, " + COLUMN_QR_DATE_EDIT + " DATE, " + COLUMN_QR_IS_SCANNED +" BOOL)";
         db.execSQL(createTableStatement);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        String query = "DROP TABLE IF EXISTS " + QR_TABLE;
+        db.execSQL(query);
+        onCreate(db);
     }
 
     public boolean addCreatedQR(QrCodeModel qrCodeModel) {
@@ -65,11 +68,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrName = cursor.getString(1);
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
-                Date qrDateCreate = new Date(cursor.getLong(4)*1000);
-                Date qrDateEdit = new Date(cursor.getLong(4)*1000);
-                boolean qrIsScanned = cursor.getInt(6) == 1;
+                byte[] qrImage = cursor.getBlob(4);
+                Date qrDateCreate = new Date(cursor.getLong(5)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+                boolean qrIsScanned = cursor.getInt(7) == 1;
 
-                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc,qrDateCreate,qrDateEdit,qrIsScanned));
+
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -89,11 +94,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrName = cursor.getString(1);
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
-                Date qrDateCreate = new Date(cursor.getLong(4)*1000);
-                Date qrDateEdit = new Date(cursor.getLong(4)*1000);
-                boolean qrIsScanned = cursor.getInt(6) == 1;
+                byte[] qrImage = cursor.getBlob(4);
+                Date qrDateCreate = new Date(cursor.getLong(5)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+                boolean qrIsScanned = cursor.getInt(7) == 1;
 
-                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc,qrDateCreate,qrDateEdit,qrIsScanned));
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -113,11 +119,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrName = cursor.getString(1);
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
-                Date qrDateCreate = new Date(cursor.getLong(4)*1000);
-                Date qrDateEdit = new Date(cursor.getLong(4)*1000);
-                boolean qrIsScanned = cursor.getInt(6) == 1;
+                byte[] qrImage = cursor.getBlob(4);
+                Date qrDateCreate = new Date(cursor.getLong(5)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+                boolean qrIsScanned = cursor.getInt(7) == 1;
 
-                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc,qrDateCreate,qrDateEdit,qrIsScanned));
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned));
             } while (cursor.moveToNext());
         }
         cursor.close();
