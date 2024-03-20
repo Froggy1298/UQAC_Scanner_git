@@ -46,10 +46,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        //TODO do not forget to add the picture
         cv.put(COLUMN_QR_NAME, qrCodeModel.getName());
         cv.put(COLUMN_QR_URL, qrCodeModel.getUrl());
         cv.put(COLUMN_QR_DESCRIPTION, qrCodeModel.getDescription());
+        cv.put(COLUMN_QR_IMAGE, qrCodeModel.getCodeQR());
         cv.put(COLUMN_QR_DATE_CREATE, qrCodeModel.getDateCreation().getTime());
         cv.put(COLUMN_QR_DATE_EDIT, qrCodeModel.getDateEdit().getTime());
         cv.put(COLUMN_QR_IS_SCANNED, qrCodeModel.getIsScanned());
@@ -60,12 +60,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public boolean edit(Integer id, String newName) {
+    public boolean edit(int id, QrCodeModel newQrCodeModel) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
-        //TODO add here the value to edit, this is only a test function, it will change in the future
-        cv.put(COLUMN_QR_NAME, newName);
+        cv.put(COLUMN_QR_NAME, newQrCodeModel.getName());
+        cv.put(COLUMN_QR_URL, newQrCodeModel.getUrl());
+        cv.put(COLUMN_QR_DESCRIPTION, newQrCodeModel.getDescription());
+        cv.put(COLUMN_QR_IMAGE, newQrCodeModel.getCodeQR());
+        cv.put(COLUMN_QR_DATE_CREATE, newQrCodeModel.getDateCreation().getTime());
+        cv.put(COLUMN_QR_DATE_EDIT, newQrCodeModel.getDateEdit().getTime());
+        cv.put(COLUMN_QR_IS_SCANNED, newQrCodeModel.getIsScanned());
 
         // Update the row where the ID matches the provided id<
         long update = db.update(QR_TABLE, cv, QR_ID + " = " + id, null);
@@ -74,7 +78,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public List<QrCodeModel> getAllQR() {
-        //TODO we will need a get specific QR code
         List<QrCodeModel> returnList = new ArrayList<>();
         String query = "SELECT * FROM " + QR_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -100,9 +103,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
-    //isScanned = 0 = The code QR was created
-    //isScanned = 1 = The code QR was scanned
-    public List<QrCodeModel> getListQR(int isScanned) {
+    public QrCodeModel getQR(Int id) {
+        QrCodeModel returnQR = new QrCodeModel();
+        String query = "SELECT * FROM " + QR_TABLE + " WHERE " + QR_ID+ "=" + id;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            int qrID = cursor.getInt(0);
+            String qrName = cursor.getString(1);
+            String qrUrl = cursor.getString(2);
+            String qrDesc = cursor.getString(3);
+            byte[] qrImage = cursor.getBlob(4);
+            Date qrDateCreate = new Date(cursor.getLong(5)*1000);
+            Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+            boolean qrIsScanned = cursor.getInt(7) == 1;
+
+            returnQR = new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned);
+        }
+        cursor.close();
+        db.close();
+        return  returnQR;
+    }
+
+    public List<QrCodeModel> getListQR(boolean isScanned) {
         List<QrCodeModel> returnList = new ArrayList<>();
         String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + "=" + isScanned;
         SQLiteDatabase db = this.getReadableDatabase();

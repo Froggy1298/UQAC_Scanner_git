@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DIM", String.valueOf(allQR.get(x).getIsScanned()));
         }*/
 
-        List<QrCodeModel> scanned = dataBaseHelper.getListQR(0);
+        List<QrCodeModel> scanned = dataBaseHelper.getListQR(true);
         /*for (int x = 0;x<allQR.size();x++)
         {
             Log.e("DIM", scanned.get(x).getName());
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DIM", String.valueOf(scanned.get(x).getIsScanned()));
         }*/
 
-        List<QrCodeModel> created = dataBaseHelper.getListQR(1);
+        List<QrCodeModel> created = dataBaseHelper.getListQR(false);
         /*for (int x = 0;x<allQR.size();x++)
         {
             Log.e("DIM", created.get(x).getName());
