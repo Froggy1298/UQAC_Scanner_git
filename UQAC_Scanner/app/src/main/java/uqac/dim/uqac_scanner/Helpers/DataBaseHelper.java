@@ -126,7 +126,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return  returnQR;
     }
 
-    public List<QrCodeModel> getListQR(boolean isScanned) {
+    public List<QrCodeModel> getListQR(Integer isScanned) {
         List<QrCodeModel> returnList = new ArrayList<>();
         String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + "=" + isScanned;
         SQLiteDatabase db = this.getReadableDatabase();
