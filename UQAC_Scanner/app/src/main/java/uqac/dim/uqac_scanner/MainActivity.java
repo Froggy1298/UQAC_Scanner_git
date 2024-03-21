@@ -12,27 +12,22 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import uqac.dim.uqac_scanner.CreateFolder.Create;
-import uqac.dim.uqac_scanner.HistoryFolder.History;
-import uqac.dim.uqac_scanner.ScannerFolder.Scanner;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 
 public class MainActivity extends AppCompatActivity {
-
-    private DataBaseHelper dataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        dataBaseHelper = new DataBaseHelper(MainActivity.this);
-
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
         Date today =  Calendar.getInstance().getTime();
         byte[] image = new byte[6];
 
@@ -47,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DIM", String.valueOf(allQR.get(x).getIsScanned()));
         }*/
 
-        List<QrCodeModel> scanned = dataBaseHelper.getListQR(1);
+        List<QrCodeModel> scanned = dataBaseHelper.getListQR(true);
         /*for (int x = 0;x<allQR.size();x++)
         {
             Log.e("DIM", scanned.get(x).getName());
@@ -55,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DIM", String.valueOf(scanned.get(x).getIsScanned()));
         }*/
 
-        List<QrCodeModel> created = dataBaseHelper.getListQR(0);
+        List<QrCodeModel> created = dataBaseHelper.getListQR(false);
         /*for (int x = 0;x<allQR.size();x++)
         {
             Log.e("DIM", created.get(x).getName());
@@ -70,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Scanner(), true);
     }
-    
+
     public boolean onNavigationItemSelected(MenuItem item)
     {
         try {
