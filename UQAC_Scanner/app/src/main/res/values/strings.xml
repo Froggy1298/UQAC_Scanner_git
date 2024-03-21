@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">UQAC_Scanner</string>
     <string name="search">Search</string>
-    <string name="scanned">Scanned</string>
-    <string name="created">Created</string>
+    <string name="scanned">Scan</string>
+    <string name="created">Créer</string>
+    <string name="edit_icon">edit icon</string>
 </resources>

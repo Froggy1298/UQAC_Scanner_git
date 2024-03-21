@@ -24,6 +24,7 @@
             android:padding="5dp"/>
 
         <ListView
+            android:id="@+id/history_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7"
@@ -38,11 +39,11 @@
             android:layout_margin="10dp"
             android:orientation="horizontal">
             <RadioGroup
+                android:id="@+id/filterHistory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/custom_track"
-                android:orientation="horizontal"
-                android:checkedButton="@id/created_radio">
+                android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/created_radio"
                     android:layout_width="match_parent"
