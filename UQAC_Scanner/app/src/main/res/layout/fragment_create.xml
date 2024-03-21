@@ -3,83 +3,100 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CreateFolder.Create">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:fillViewport="true"
+        android:layout_marginBottom="120dp">
 
-
-        <TextView
-            android:id="@+id/label_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Nom"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-        <EditText
-            android:id="@+id/field_name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:inputType="text"
-            android:background="@color/white"
-            android:layout_marginBottom="40dp"
-            android:hint="Entrer le nom ici"/>
-
-        <TextView
-            android:id="@+id/label_url"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="URL"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-        <EditText
-            android:id="@+id/field_url"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:inputType="text"
-            android:background="@color/white"
-            android:layout_marginBottom="40dp"
-            android:hint="Entrer l'URL ici"/>
-
-        <TextView
-            android:id="@+id/label_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-        <EditText
-            android:id="@+id/field_desc"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:textSize="20sp"
-            android:padding="5dp"
-            android:inputType="text"
-            android:gravity="start"
-            android:background="@color/white"
-            android:hint="Entrer la description ici"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
 
 
-        <Button
-            android:id="@+id/but_make_choice"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:gravity="center"
-            android:text="Confirmer"
-            style="@style/buttonTest"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nom"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="text"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="Entrer le nom ici"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/label_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="URL"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="text"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="Entrer l'URL ici"/>
+
+            <TextView
+                android:id="@+id/label_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_desc"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="Entrer la description ici"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/but_confirm_create"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:text="Confirmer"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                app:icon="@drawable/confirmer"
+                app:iconPadding="50dp"
+                app:iconTint="@color/black"
+                app:iconGravity="textEnd"
+                app:iconSize="50dp"/>
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

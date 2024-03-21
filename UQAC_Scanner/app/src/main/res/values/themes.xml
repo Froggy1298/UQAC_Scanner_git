@@ -15,11 +15,5 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="buttonTest" parent="Theme.UQAC_Scanner">
-        <item name="borderRoundPercent">50</item>
-        <item name="strokeColor">@color/Light_Blue</item>
-        <item name="android:backgroundTint">@color/white</item>
-        <item name="android:textColor">@color/black</item>
-    </style>
 
 </resources>
