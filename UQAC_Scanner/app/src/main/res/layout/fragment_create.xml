@@ -94,8 +94,6 @@
                 app:iconTint="@color/black"
                 app:iconGravity="textEnd"
                 app:iconSize="50dp"/>
-
-
         </LinearLayout>
     </ScrollView>
 

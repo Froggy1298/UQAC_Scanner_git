@@ -1,27 +1,25 @@
 package uqac.dim.uqac_scanner.CreateFolder;
 
+import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
-import uqac.dim.uqac_scanner.MainActivity;
+import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
+import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 public class Create extends Fragment {
 
@@ -34,7 +32,6 @@ public class Create extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("LOG", "Create1");
         View view = inflater.inflate(R.layout.fragment_create, container, false);
 
         dataBaseHelper = new DataBaseHelper(getActivity());
@@ -42,7 +39,6 @@ public class Create extends Fragment {
 
         ((Button)view.findViewById(R.id.but_confirm_create))
                 .setOnClickListener(this::onClickConfirmCreate);
-
 
 
 
@@ -56,8 +52,36 @@ public class Create extends Fragment {
 
 
     private void onClickConfirmCreate(View view) {
-        Log.i("LOG", "Create2");
+        //Check that all field
+        if(TextUtils.isEmpty(NameEditText.getText().toString().trim()) |
+                TextUtils.isEmpty(URLEditText.getText().toString().trim()) |
+                TextUtils.isEmpty(DescEditText.getText().toString().trim()))
+        {
+            Toast.makeText(getActivity(), "Information manquante", Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        Bitmap tempBitmap = BitMapHelper.CreateBitMapFromString(URLEditText.getText().toString());
+        byte[] tempBitmapByteArray = BitMapHelper.getBytes(tempBitmap);
+
+        QrCodeModel qrCode = new QrCodeModel(
+                NameEditText.getText().toString().trim(),
+                URLEditText.getText().toString().trim(),
+                DescEditText.getText().toString().trim(),
+                tempBitmapByteArray,
+                GeneralHelper.getCurrentTimeDate(),
+                GeneralHelper.getCurrentTimeDate(),
+                false);
+
+        dataBaseHelper.addCreatedQR(qrCode);
+
+        NameEditText.getText().clear();
+        URLEditText.getText().clear();
+        DescEditText.getText().clear();
+        GeneralHelper.hideKeyboard(getActivity());
     }
+
+
+
 
 }
