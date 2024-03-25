@@ -1,28 +1,22 @@
 package uqac.dim.uqac_scanner.HistoryFolder;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Helpers.HistoryAdapter;
-import uqac.dim.uqac_scanner.MainActivity;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
 
@@ -59,6 +53,18 @@ public class History extends Fragment {
             }
             createAdapter();
             historyAdapter.notifyDataSetChanged();
+        });
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                QrCodeModel model = (QrCodeModel) parent.getItemAtPosition(position);
+                Log.e("DIM", "INFO");
+                //Change InfoQr.class pour la classe d'edit
+                /*Intent intent = new Intent(getActivity(), InfoQr.class);
+                intent.putExtra("QR_ID_SELECTED", model.getID());
+                startActivity(intent);*/
+            }
         });
 
     }
