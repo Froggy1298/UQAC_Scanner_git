@@ -21,8 +21,11 @@
             android:inputType="text"
             tools:ignore="LabelFor"
             android:background="@color/white"
-            android:padding="5dp"/>
-
+            android:padding="5dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/black"/>
         <ListView
             android:id="@+id/history_list"
             android:layout_width="match_parent"
