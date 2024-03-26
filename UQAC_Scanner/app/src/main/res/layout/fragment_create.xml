@@ -3,15 +3,98 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CreateFolder.Create">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:text="Create Fragment" />
+        android:fillViewport="true"
+        android:layout_marginBottom="120dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+
+            <TextView
+                android:id="@+id/label_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nom"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="text"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="@string/entrer_le_nom_ici"/>
+
+            <TextView
+                android:id="@+id/label_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/url"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_url"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="text"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="@string/entrer_l_url_ici"/>
+
+            <TextView
+                android:id="@+id/label_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+            <EditText
+                android:id="@+id/field_desc"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:textSize="20sp"
+                android:padding="5dp"
+                android:inputType="textMultiLine"
+                android:gravity="start"
+                android:background="@color/white"
+                android:layout_marginBottom="40dp"
+                android:hint="@string/entrer_la_description_ici"/>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/but_confirm_create"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:text="@string/confirmer"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                app:icon="@drawable/confirmer"
+                app:iconPadding="50dp"
+                app:iconTint="@color/black"
+                app:iconGravity="textEnd"
+                app:iconSize="50dp"/>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
