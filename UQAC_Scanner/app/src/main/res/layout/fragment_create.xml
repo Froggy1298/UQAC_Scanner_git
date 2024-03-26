@@ -23,7 +23,7 @@
                 android:id="@+id/label_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nom"
+                android:text="@string/nom"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
@@ -36,13 +36,13 @@
                 android:inputType="text"
                 android:background="@color/white"
                 android:layout_marginBottom="40dp"
-                android:hint="Entrer le nom ici"/>
+                android:hint="@string/entrer_le_nom_ici"/>
 
             <TextView
                 android:id="@+id/label_url"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="URL"
+                android:text="@string/url"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
@@ -55,13 +55,13 @@
                 android:inputType="text"
                 android:background="@color/white"
                 android:layout_marginBottom="40dp"
-                android:hint="Entrer l'URL ici"/>
+                android:hint="@string/entrer_l_url_ici"/>
 
             <TextView
                 android:id="@+id/label_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/description"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
@@ -75,7 +75,7 @@
                 android:gravity="start"
                 android:background="@color/white"
                 android:layout_marginBottom="40dp"
-                android:hint="Entrer la description ici"/>
+                android:hint="@string/entrer_la_description_ici"/>
 
 
             <com.google.android.material.button.MaterialButton
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:text="Confirmer"
+                android:text="@string/confirmer"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:cornerRadius="50dp"

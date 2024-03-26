@@ -79,6 +79,7 @@ public class Create extends Fragment {
         URLEditText.getText().clear();
         DescEditText.getText().clear();
         GeneralHelper.hideKeyboard(getActivity());
+        GeneralHelper.showToast(getActivity(),"Code QR Créé", 5);
     }
 
 

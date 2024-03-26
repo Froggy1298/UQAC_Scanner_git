@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">UQAC_Scanner</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="entrer_la_description_ici">Entrer la description ici</string>
+    <string name="description">Description</string>
+    <string name="entrer_l_url_ici">Entrer l\'URL ici</string>
+    <string name="url">URL</string>
+    <string name="entrer_le_nom_ici">Entrer le nom ici</string>
+    <string name="nom">Nom</string>
 </resources>

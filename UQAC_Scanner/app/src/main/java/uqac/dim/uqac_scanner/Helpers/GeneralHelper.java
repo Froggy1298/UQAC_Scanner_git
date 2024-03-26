@@ -1,7 +1,10 @@
 package uqac.dim.uqac_scanner.Helpers;
 import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,5 +34,14 @@ public class GeneralHelper {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
+
+    public static void showToast(Context context, String message, int duration) {
+        Toast toast = Toast.makeText(context, message, duration);
+
+        // Display the toast
+        toast.show();
     }
 }
