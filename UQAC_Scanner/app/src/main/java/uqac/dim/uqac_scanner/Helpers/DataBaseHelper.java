@@ -152,11 +152,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
-    public List<QrCodeModel> searchListQR(String research) {
+    public List<QrCodeModel> searchListQR(String research, Integer  isScanned) {
         List<QrCodeModel> returnList = new ArrayList<>();
+        String query = "SELECT * FROM " + QR_TABLE + " WHERE " + COLUMN_QR_IS_SCANNED + "=" + isScanned + " AND " + COLUMN_QR_NAME + " LIKE " + "'%" + research + "%'";
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(true, QR_TABLE, null, COLUMN_QR_NAME + " LIKE ?", new String[] {"%"+ research + "%" },
-                null,null,null,null);
+        Cursor cursor = db.rawQuery(query, null);
 
         if (cursor.moveToFirst()) {
             do {

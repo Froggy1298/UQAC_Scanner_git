@@ -78,13 +78,16 @@ public class History extends Fragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 String searched = searchField.getText().toString();
                 if(keyCode == KeyEvent.KEYCODE_ENTER) {
-                    listQrCode = dbHelper.searchListQR(searched);
+                    if(filterSwitch.getCheckedRadioButtonId() == R.id.created_radio) {
+                        listQrCode = dbHelper.searchListQR(searched, 0);
+                    }
+                    else if(filterSwitch.getCheckedRadioButtonId() == R.id.scanned_radio) {
+                        listQrCode = dbHelper.searchListQR(searched, 1);
+                    }
                     GeneralHelper.hideKeyboard(getActivity());
-                    filterSwitch.clearCheck();
                     createAdapter();
                     historyAdapter.notifyDataSetChanged();
                 }
-                searchField.setText(searched);
                 return false;
             }
         });
