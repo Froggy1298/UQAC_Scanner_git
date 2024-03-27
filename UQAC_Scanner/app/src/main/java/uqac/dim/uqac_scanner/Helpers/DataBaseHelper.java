@@ -152,6 +152,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+    public List<QrCodeModel> searchListQR(String research) {
+        List<QrCodeModel> returnList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(true, QR_TABLE, null, COLUMN_QR_NAME + " LIKE ?", new String[] {"%"+ research + "%" },
+                null,null,null,null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int qrID = cursor.getInt(0);
+                String qrName = cursor.getString(1);
+                String qrUrl = cursor.getString(2);
+                String qrDesc = cursor.getString(3);
+                byte[] qrImage = cursor.getBlob(4);
+                Date qrDateCreate = new Date(cursor.getLong(5)*1000);
+                Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+                boolean qrIsScanned = cursor.getInt(7) == 1;
+
+                returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return returnList;
+    }
 
     public boolean deleteQRCode(Integer id) {
         SQLiteDatabase db = this.getWritableDatabase();
