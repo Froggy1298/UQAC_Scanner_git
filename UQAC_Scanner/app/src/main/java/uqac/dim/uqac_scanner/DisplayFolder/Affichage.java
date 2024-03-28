@@ -1,4 +1,4 @@
-package uqac.dim.uqac_scanner.ScannerFolder;
+package uqac.dim.uqac_scanner.DisplayFolder;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

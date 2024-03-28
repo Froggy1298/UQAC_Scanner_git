@@ -15,7 +15,7 @@
         android:theme="@style/Theme.UQAC_Scanner"
         tools:targetApi="31">
         <activity
-            android:name=".ScannerFolder.Affichage"
+            android:name=".DisplayFolder.Affichage"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

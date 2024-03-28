@@ -19,7 +19,7 @@ import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Helpers.HistoryAdapter;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
-import uqac.dim.uqac_scanner.ScannerFolder.Affichage;
+import uqac.dim.uqac_scanner.DisplayFolder.Affichage;
 
 public class History extends Fragment {
     DataBaseHelper dbHelper;
