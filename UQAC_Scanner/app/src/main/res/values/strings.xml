@@ -11,4 +11,6 @@
     <string name="url">URL</string>
     <string name="entrer_le_nom_ici">Entrer le nom ici</string>
     <string name="nom">Nom</string>
+    <string name="date">Crée le 00/00/000</string>
+    <string name="acceder">Accéder</string>
 </resources>

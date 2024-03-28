@@ -1,5 +1,6 @@
 package uqac.dim.uqac_scanner.Helpers;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -31,17 +32,19 @@ public class HistoryAdapter extends ArrayAdapter<QrCodeModel> {
         QrCodeModel qrCodeModel = getItem(position);
         if (view == null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-            ImageView imageView = view.findViewById(R.id.editQR);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e("DIM", "edit") ;
-                    /*Intent intent = new Intent(getContext(), InfoQr.class);
-                    intent.putExtra("QR_ID_SELECTED", qrCodeModel.getID());
-                    getContext().startActivity(intent);*/
-                }
-            });
         }
+
+        ImageView imageView = view.findViewById(R.id.editQR);
+        imageView.setTag(position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QrCodeModel qrCodeModel = getItem((int)v.getTag());
+                Log.e("DIM", "clicked edit" + qrCodeModel.getID()) ;
+                /*Intent intent = new Intent(getContext(), Edit.class);
+                intent.putExtra("QR_ID_SELECTED", qrCodeModel.getID());*/
+               }
+        });
 
         TextView listText= view.findViewById(R.id.listText);
         listText.setText(qrCodeModel.getName());
