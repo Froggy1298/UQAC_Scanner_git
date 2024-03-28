@@ -22,6 +22,7 @@ import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
 import uqac.dim.uqac_scanner.Helpers.HistoryAdapter;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
+import uqac.dim.uqac_scanner.DisplayFolder.Affichage;
 
 public class History extends Fragment {
     DataBaseHelper dbHelper;
@@ -83,9 +84,9 @@ public class History extends Fragment {
                 QrCodeModel model = (QrCodeModel) parent.getItemAtPosition(position);
                 Log.e("DIM", "INFO");
                 //Change InfoQr.class pour la classe d'edit
-                /*Intent intent = new Intent(getActivity(), InfoQr.class);
+                Intent intent = new Intent(getActivity(), Affichage.class);
                 intent.putExtra("QR_ID_SELECTED", model.getID());
-                startActivity(intent);*/
+                startActivity(intent);
             }
         });
 

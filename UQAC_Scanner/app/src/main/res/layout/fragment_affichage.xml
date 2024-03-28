@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScannerFolder.Affichage">
+    tools:context=".DisplayFolder.Affichage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
 
         <TextView
             android:id="@+id/label_date"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/date"
@@ -38,12 +39,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundstyle"
-                android:layout_gravity="center"
                 android:padding="50dp"
                 android:text="@string/description"
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:textStyle="bold"
+                android:gravity="start|top"
                 android:layout_marginBottom="5dp"/>
 
         <ImageView
@@ -74,7 +75,53 @@
             app:iconGravity="textEnd"
             app:iconSize="50dp"/>
 
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_return"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                app:icon="@drawable/retour"
+                android:text="R"
+                app:iconPadding="10dp"
+                app:iconTint="@color/black"
+                app:iconSize="50dp"/>
+
+
+            <Space
+                android:layout_width="16dp"
+                android:layout_height="wrap_content" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/download"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="télecharger"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:cornerRadius="50dp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                app:icon="@drawable/telecharger"
+                app:iconPadding="10dp"
+                app:iconTint="@color/black"
+                app:iconGravity="textEnd"
+                app:iconSize="50dp"/>
+
+        </LinearLayout>
 
 </LinearLayout>
 
