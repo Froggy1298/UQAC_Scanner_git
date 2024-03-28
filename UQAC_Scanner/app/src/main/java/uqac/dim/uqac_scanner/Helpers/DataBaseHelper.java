@@ -67,8 +67,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_QR_URL, newQrCodeModel.getUrl());
         cv.put(COLUMN_QR_DESCRIPTION, newQrCodeModel.getDescription());
         cv.put(COLUMN_QR_IMAGE, newQrCodeModel.getCodeQR());
+
+        //TODO est-ce qu'on peut enlever celui-la, on modifiera jamais la date de création?
         cv.put(COLUMN_QR_DATE_CREATE, newQrCodeModel.getDateCreation().getTime());
+
         cv.put(COLUMN_QR_DATE_EDIT, newQrCodeModel.getDateEdit().getTime());
+
+        //TODO est-ce qu'on peut enlever celui-la, on modifiera jamais la type?
         cv.put(COLUMN_QR_IS_SCANNED, newQrCodeModel.getIsScanned());
 
         // Update the row where the ID matches the provided id<
@@ -90,6 +95,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
                 byte[] qrImage = cursor.getBlob(4);
+
+                //TODO est-ce que l'erreur peut venir du fait qu'on fait "*1000"???
                 Date qrDateCreate = new Date(cursor.getLong(5)*1000);
                 Date qrDateEdit = new Date(cursor.getLong(6)*1000);
                 boolean qrIsScanned = cursor.getInt(7) == 1;
@@ -117,6 +124,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             String qrUrl = cursor.getString(2);
             String qrDesc = cursor.getString(3);
             byte[] qrImage = cursor.getBlob(4);
+
+            //TODO est-ce que l'erreur peut venir du fait qu'on fait "*1000"???
             Date qrDateCreate = new Date(cursor.getLong(5)*1000);
             Date qrDateEdit = new Date(cursor.getLong(6)*1000);
             boolean qrIsScanned = cursor.getInt(7) == 1;
@@ -141,6 +150,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
                 byte[] qrImage = cursor.getBlob(4);
+
+                //TODO est-ce que l'erreur peut venir du fait qu'on fait "*1000"???
                 Date qrDateCreate = new Date(cursor.getLong(5)*1000);
                 Date qrDateEdit = new Date(cursor.getLong(6)*1000);
                 boolean qrIsScanned = cursor.getInt(7) == 1;
