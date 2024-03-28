@@ -5,21 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ScannerFolder.Scanner">
 
-    <!-- ImageView pour afficher l'image capturée -->
-    <ImageView
-        android:id="@+id/click_image"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <!-- Bouton "De ma bibliothèque" en bas -->
-    <Button
-        android:id="@+id/from_library_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="De ma bibliothèque"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:textColor="#FFFFFF"
-        android:background="#1976D2"/>
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="Scanner Fragment" />
 
 </FrameLayout>
