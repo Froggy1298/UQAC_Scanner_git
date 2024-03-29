@@ -33,22 +33,22 @@ public class HistoryAdapter extends ArrayAdapter<QrCodeModel> {
         QrCodeModel qrCodeModel = getItem(position);
         if (view == null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
-            ImageView imageView = view.findViewById(R.id.editQR);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.e("DIM", "edit") ;
-                    //TODO TEST ICI POUR L'ID
-                    int test = qrCodeModel.getID();
-                    String test2 = qrCodeModel.getName();
-
-                    Intent intent = new Intent(getContext(), Edit.class);
-                    intent.putExtra("QR_ID_SELECTED", String.valueOf(qrCodeModel.getID()));
-                    getContext().startActivity(intent,
-                            ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());
-                }
-            });
         }
+
+        ImageView imageView = view.findViewById(R.id.editQR);
+        imageView.setTag(position);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QrCodeModel qrCodeModel = getItem((int)v.getTag());
+                Log.e("DIM", "clicked edit" + qrCodeModel.getID()) ;
+                Intent intent = new Intent(getContext(), Edit.class);
+                intent.putExtra("QR_ID_SELECTED", String.valueOf(qrCodeModel.getID()));
+                getContext().startActivity(intent,
+                        ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());
+               }
+        });
+
         TextView listText= view.findViewById(R.id.listText);
         listText.setText(qrCodeModel.getName());
         return view;

@@ -124,10 +124,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             String qrUrl = cursor.getString(2);
             String qrDesc = cursor.getString(3);
             byte[] qrImage = cursor.getBlob(4);
-
-            //TODO est-ce que l'erreur peut venir du fait qu'on fait "*1000"???
-            Date qrDateCreate = new Date(cursor.getLong(5)*1000);
-            Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+            Date qrDateCreate = new Date(cursor.getLong(5));
+            Date qrDateEdit = new Date(cursor.getLong(6));
             boolean qrIsScanned = cursor.getInt(7) == 1;
 
             returnQR = new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned);
@@ -150,10 +148,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String qrUrl = cursor.getString(2);
                 String qrDesc = cursor.getString(3);
                 byte[] qrImage = cursor.getBlob(4);
-
-                //TODO est-ce que l'erreur peut venir du fait qu'on fait "*1000"???
-                Date qrDateCreate = new Date(cursor.getLong(5)*1000);
-                Date qrDateEdit = new Date(cursor.getLong(6)*1000);
+                Date qrDateCreate = new Date(cursor.getLong(5));
+                Date qrDateEdit = new Date(cursor.getLong(6));
                 boolean qrIsScanned = cursor.getInt(7) == 1;
 
                 returnList.add(new QrCodeModel(qrID,qrName,qrUrl,qrDesc, qrImage,qrDateCreate,qrDateEdit,qrIsScanned));
