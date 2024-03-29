@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import uqac.dim.uqac_scanner.Helpers.OnSwipeTouchListener;
 import uqac.dim.uqac_scanner.R;
 
 public class Display extends AppCompatActivity {
@@ -35,6 +37,12 @@ public class Display extends AppCompatActivity {
         Button returnButton = findViewById(R.id.btn_return);
         returnButton.setOnClickListener(this::onClickReturn);
 
+        ((LinearLayout)findViewById(R.id.theBigOne))
+                .setOnTouchListener(new OnSwipeTouchListener(this) {
+                    public void onSwipeRight() {
+                        onClickReturn(null);
+                    }
+                });
 
         Button accessButton = findViewById(R.id.access);
         accessButton.setOnClickListener(new View.OnClickListener() {
