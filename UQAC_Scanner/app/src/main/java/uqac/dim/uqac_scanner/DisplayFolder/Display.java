@@ -33,12 +33,7 @@ public class Display extends AppCompatActivity {
         });
 
         Button returnButton = findViewById(R.id.btn_return);
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        returnButton.setOnClickListener(this::onClickReturn);
 
 
         Button accessButton = findViewById(R.id.access);
@@ -53,6 +48,13 @@ public class Display extends AppCompatActivity {
             }
         });
     }
+
+
+    private void onClickReturn(View view) {
+        finish();
+        this.overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+    }
+
 
     private void captureAndSaveScreen() {
         //Interface de l'utilisateur
