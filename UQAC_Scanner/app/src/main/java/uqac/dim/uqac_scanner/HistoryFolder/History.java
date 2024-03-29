@@ -1,5 +1,6 @@
 package uqac.dim.uqac_scanner.HistoryFolder;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,13 +17,13 @@ import android.widget.RadioGroup;
 
 import java.util.List;
 
+import uqac.dim.uqac_scanner.DisplayFolder.Display;
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
 import uqac.dim.uqac_scanner.Helpers.HistoryAdapter;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
-import uqac.dim.uqac_scanner.DisplayFolder.Affichage;
 
 public class History extends Fragment {
     DataBaseHelper dbHelper;
@@ -83,11 +84,12 @@ public class History extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 QrCodeModel model = (QrCodeModel) parent.getItemAtPosition(position);
                 Log.e("DIM", "INFO");
+
                 //Change InfoQr.class pour la classe d'edit
-                Intent intent = new Intent(getActivity(), Affichage.class);
+                Intent intent = new Intent(getActivity(), Display.class);
                 intent.putExtra("QR_ID_SELECTED", model.getID());
-                startActivity(intent);
-            }
+                getContext().startActivity(intent,
+                        ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());          }
         });
 
     }

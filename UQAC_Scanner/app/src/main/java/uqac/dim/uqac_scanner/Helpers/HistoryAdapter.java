@@ -38,10 +38,11 @@ public class HistoryAdapter extends ArrayAdapter<QrCodeModel> {
                 @Override
                 public void onClick(View v) {
                     Log.e("DIM", "edit") ;
-                    Intent intent = new Intent(getContext(), Edit.class);
                     //TODO TEST ICI POUR L'ID
                     int test = qrCodeModel.getID();
                     String test2 = qrCodeModel.getName();
+
+                    Intent intent = new Intent(getContext(), Edit.class);
                     intent.putExtra("QR_ID_SELECTED", String.valueOf(qrCodeModel.getID()));
                     getContext().startActivity(intent,
                             ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());

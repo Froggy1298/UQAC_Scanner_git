@@ -1,23 +1,26 @@
 package uqac.dim.uqac_scanner.DisplayFolder;
 
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
+
 import android.graphics.Bitmap;
-import android.widget.Toast;
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+
 import uqac.dim.uqac_scanner.R;
 
-public class Affichage extends AppCompatActivity {
+public class Display extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_affichage);
+        setContentView(R.layout.activity_display);
+
 
 
         Button downloadButton = findViewById(R.id.download);
@@ -75,7 +78,7 @@ public class Affichage extends AppCompatActivity {
             outputStream.close();
             Toast.makeText(this, "Yayyy", Toast.LENGTH_SHORT).show();
 
-            } catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(this,"Nooo", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.UQAC_Scanner"
         tools:targetApi="31">
         <activity
+            android:name=".DisplayFolder.Display"
+            android:exported="false" />
+        <activity
             android:name=".EditFolder.Edit"
             android:exported="false" />
         <activity

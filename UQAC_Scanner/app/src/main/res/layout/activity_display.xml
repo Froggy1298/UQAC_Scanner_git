@@ -33,19 +33,19 @@
             android:textStyle="bold"
             android:textColor="@color/black"/>
 
-            <TextView
-                android:id="@+id/description"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/roundstyle"
-                android:padding="50dp"
-                android:text="@string/description"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:gravity="start|top"
-                android:layout_marginBottom="5dp"/>
+        <TextView
+            android:id="@+id/description"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/roundstyle"
+            android:padding="50dp"
+            android:text="@string/description"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:gravity="start|top"
+            android:layout_marginBottom="5dp"/>
 
         <ImageView
             android:id="@+id/affichageqr"
@@ -92,7 +92,6 @@
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
                 app:icon="@drawable/retour"
-                android:text="R"
                 app:iconPadding="10dp"
                 app:iconTint="@color/black"
                 app:iconSize="50dp"/>
@@ -123,6 +122,6 @@
 
         </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
