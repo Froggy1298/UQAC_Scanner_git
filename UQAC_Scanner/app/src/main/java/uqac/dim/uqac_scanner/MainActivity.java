@@ -10,12 +10,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import uqac.dim.uqac_scanner.CreateFolder.Create;
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
+import uqac.dim.uqac_scanner.Helpers.OnSwipeTouchListener;
 import uqac.dim.uqac_scanner.HistoryFolder.History;
 import uqac.dim.uqac_scanner.ScannerFolder.Scanner;
 
@@ -87,6 +90,21 @@ public class MainActivity extends AppCompatActivity {
         ((FloatingActionButton)findViewById(R.id.but_Create))
                 .setOnClickListener(this::onClickCreate);
 
+
+        ((FrameLayout)findViewById(R.id.frame_layout))
+                .setOnTouchListener(new OnSwipeTouchListener(this) {
+                    public void onSwipeRight() {
+                        loadFragment(new Scanner(), false, R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+                    }
+                    public void onSwipeLeft(){
+                        loadFragment(new History(), false, R.anim.slide_in_right_to_center, R.anim.slide_out_center_to_left);
+                    }
+                    public void onSwipeTop() {
+                        loadFragment(new Create(), false, R.anim.fade_in, R.anim.fade_out);
+                    }
+                });
+
+
         loadFragment(new Scanner(), true, R.anim.fade_in, R.anim.fade_out);
     }
     
@@ -136,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         {
             fragmentTransaction.replace(R.id.frame_layout, fragmentToLoad);
         }
-        fragmentTransaction.commit(
-        );
+
+        fragmentTransaction.commit();
     }
 }
