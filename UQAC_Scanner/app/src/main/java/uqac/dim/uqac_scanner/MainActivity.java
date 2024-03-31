@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Log.i("LOG", "Weee");
+        Log.i("LOG", "Weee");
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
 
