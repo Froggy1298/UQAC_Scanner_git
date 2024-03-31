@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("LOG", "Weee");
         Log.i("LOG", "Weee");
-
         Log.i("LOG", "Weee");
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
