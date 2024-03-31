@@ -28,11 +28,8 @@ public class GeneralHelper {
 
     public static String DateToString(Date thisDate)
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(thisDate);
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(calendar.getTime());
+        return formatter.format(thisDate.getTime());
     }
 
 

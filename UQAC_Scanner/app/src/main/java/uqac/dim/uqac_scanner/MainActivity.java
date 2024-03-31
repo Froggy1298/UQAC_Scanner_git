@@ -47,23 +47,23 @@ public class MainActivity extends AppCompatActivity {
         //Log.e("DIM", "QR Code Created " + result);
 
         //TODO TEST ICI POUR LES DATE ET ID
-        List<QrCodeModel> allQR = dataBaseHelper.getAllQR();
-        for (int x = 0;x<allQR.size();x++)
-        {
-            Log.e("LOG", String.valueOf(allQR.get(x).getID()));
-            Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateCreation()));
-            Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateEdit()));
-            Log.e("LOG", allQR.get(x).getName());
-            Log.e("LOG", allQR.get(x).getDescription());
-            Log.e("LOG", allQR.get(x).getUrl());
-            Bitmap test = BitMapHelper.getImage(allQR.get(x).getCodeQR());
-            Log.e("LOG", "----------");
-        }
+        //List<QrCodeModel> allQR = dataBaseHelper.getAllQR();
+        //for (int x = 0;x<allQR.size();x++)
+        //{
+        //    Log.e("LOG", String.valueOf(allQR.get(x).getID()));
+        //    Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateCreation()));
+        //    Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateEdit()));
+        //    Log.e("LOG", allQR.get(x).getName());
+        //    Log.e("LOG", allQR.get(x).getDescription());
+        //    Log.e("LOG", allQR.get(x).getUrl());
+        //    Bitmap test = BitMapHelper.getImage(allQR.get(x).getCodeQR());
+        //    Log.e("LOG", "----------");
+        //}
 
         //TODO TEST ICI POUR MES FONCTION DATE
-        Date test1 = GeneralHelper.getCurrentTimeDate();
-        String test2 = GeneralHelper.getCurrentTimeString();
-        String test3 = GeneralHelper.DateToString(test1);
+        //Date test1 = GeneralHelper.getCurrentTimeDate();
+        //String test2 = GeneralHelper.getCurrentTimeString();
+        //String test3 = GeneralHelper.DateToString(test1);
 
 
 

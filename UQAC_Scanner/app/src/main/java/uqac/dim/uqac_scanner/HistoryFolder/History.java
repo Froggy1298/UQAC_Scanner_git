@@ -39,26 +39,6 @@ public class History extends Fragment {
         Log.i("LOG", "History onCreateView");
         dbHelper = new DataBaseHelper(getActivity());
         listQrCode = dbHelper.getListQR(0);
-
-
-        Log.e("LOG", "================");
-        Log.e("LOG", "================");
-        Log.e("LOG", "================");
-        //TODO TEST ICI POUR lES CODE QR GET DANS L'HISTORY
-        for (int x = 0;x<listQrCode.size();x++)
-        {
-            Log.e("LOG", String.valueOf(listQrCode.get(x).getID()));
-            Log.e("LOG", GeneralHelper.DateToString(listQrCode.get(x).getDateCreation()));
-            Log.e("LOG", GeneralHelper.DateToString(listQrCode.get(x).getDateEdit()));
-            Log.e("LOG", listQrCode.get(x).getName());
-            Log.e("LOG", listQrCode.get(x).getDescription());
-            Log.e("LOG", listQrCode.get(x).getUrl());
-            Bitmap test = BitMapHelper.getImage(listQrCode.get(x).getCodeQR());
-            Log.e("LOG", "----------");
-        }
-
-
-
         list = (ListView)view.findViewById(R.id.history_list);
         filterSwitch = view.findViewById(R.id.filterHistory);
         createListener();
@@ -67,17 +47,21 @@ public class History extends Fragment {
         return view;
     }
 
+    private int tempLastSwitchSelected = R.id.created_radio;
+    @Override
+    public void onPause() {
+        super.onPause();
+        tempLastSwitchSelected = filterSwitch.getCheckedRadioButtonId();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        onChangeSwitcChange(null, tempLastSwitchSelected);
+    }
+
     private void createListener(){
         filterSwitch.check(R.id.created_radio);
-        filterSwitch.setOnCheckedChangeListener((obj, idChecked) -> {
-            if (idChecked == R.id.created_radio) {
-                listQrCode = dbHelper.getListQR(0);
-            } else {
-                listQrCode = dbHelper.getListQR(1);
-            }
-            createAdapter();
-            historyAdapter.notifyDataSetChanged();
-        });
+        filterSwitch.setOnCheckedChangeListener(this::onChangeSwitcChange);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -93,6 +77,18 @@ public class History extends Fragment {
         });
 
     }
+
+    private void onChangeSwitcChange(RadioGroup radioGroup, int idChecked) {
+        if (idChecked == R.id.created_radio) {
+            listQrCode = dbHelper.getListQR(0);
+        } else {
+            listQrCode = dbHelper.getListQR(1);
+        }
+        createAdapter();
+        historyAdapter.notifyDataSetChanged();
+    }
+
+
     private void createAdapter() {
         historyAdapter = new HistoryAdapter(getActivity(), listQrCode);
         list.setAdapter(historyAdapter);

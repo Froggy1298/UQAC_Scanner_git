@@ -2,10 +2,12 @@ package uqac.dim.uqac_scanner.EditFolder;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telecom.Call;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
@@ -74,7 +78,31 @@ public class Edit extends AppCompatActivity{
     }
 
     private void onClickEdit(View view) {
-        Log.e("DIM", "Edit") ;
+
+        if(TextUtils.isEmpty(NameEditText.getText().toString().trim()) |
+                TextUtils.isEmpty(URLEditText.getText().toString().trim()) |
+                TextUtils.isEmpty(DescEditText.getText().toString().trim()))
+        {
+            Toast.makeText(this, "Information manquante", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Bitmap tempBitmap = BitMapHelper.CreateBitMapFromString(URLEditText.getText().toString());
+        byte[] tempBitmapByteArray = BitMapHelper.getBytes(tempBitmap);
+
+        QrCodeModel qrCode = new QrCodeModel(
+                NameEditText.getText().toString().trim(),
+                URLEditText.getText().toString().trim(),
+                DescEditText.getText().toString().trim(),
+                tempBitmapByteArray,
+                thisCodeQr.getDateCreation(),
+                GeneralHelper.getCurrentTimeDate(),
+                thisCodeQr.getIsScanned());
+
+        dbHelper.edit(thisCodeQr.getID(), qrCode);
+
+        finish();
+        this.overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
     }
 
     private void onClickReturn(View view) {
