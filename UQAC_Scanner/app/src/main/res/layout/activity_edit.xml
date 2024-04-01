@@ -49,7 +49,7 @@
             android:gravity="top|right">
 
             <ImageButton
-                android:id="@+id/icon_class"
+                android:id="@+id/but_delete"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:padding="10dp"

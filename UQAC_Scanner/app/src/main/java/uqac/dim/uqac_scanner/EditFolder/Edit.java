@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -56,6 +57,9 @@ public class Edit extends AppCompatActivity{
                 .setOnClickListener(this::onClickReturn);
         ((Button)findViewById(R.id.but_update))
                 .setOnClickListener(this::onClickEdit);
+        ((ImageButton)findViewById(R.id.but_delete))
+                .setOnClickListener(this::onClickDelete);
+
 
         ((LinearLayout)findViewById(R.id.theBigOne))
                 .setOnTouchListener(new OnSwipeTouchListener(this) {
@@ -101,12 +105,16 @@ public class Edit extends AppCompatActivity{
 
         dbHelper.edit(thisCodeQr.getID(), qrCode);
 
-        finish();
-        this.overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+        onClickReturn(view);
     }
 
     private void onClickReturn(View view) {
         finish();
         this.overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+    }
+
+    private void onClickDelete(View view) {
+        dbHelper.deleteQRCode(thisCodeQr.getID());
+        onClickReturn(view);
     }
 }
