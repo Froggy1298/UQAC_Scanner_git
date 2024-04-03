@@ -19,6 +19,7 @@ import java.util.List;
 
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
+import uqac.dim.uqac_scanner.EditFolder.Edit;
 
 public class HistoryAdapter extends ArrayAdapter<QrCodeModel> {
 
@@ -41,8 +42,10 @@ public class HistoryAdapter extends ArrayAdapter<QrCodeModel> {
             public void onClick(View v) {
                 QrCodeModel qrCodeModel = getItem((int)v.getTag());
                 Log.e("DIM", "clicked edit" + qrCodeModel.getID()) ;
-                /*Intent intent = new Intent(getContext(), Edit.class);
-                intent.putExtra("QR_ID_SELECTED", qrCodeModel.getID());*/
+                Intent intent = new Intent(getContext(), Edit.class);
+                intent.putExtra("QR_ID_SELECTED", String.valueOf(qrCodeModel.getID()));
+                getContext().startActivity(intent,
+                        ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());
                }
         });
 
