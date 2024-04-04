@@ -8,10 +8,12 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 
@@ -31,6 +33,7 @@ public class History extends Fragment {
     ListView list;
     HistoryAdapter historyAdapter;
     RadioGroup filterSwitch;
+    EditText searchField;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,6 +41,7 @@ public class History extends Fragment {
         View view = inflater.inflate(R.layout.fragment_history, container, false);
         Log.i("LOG", "History onCreateView");
         dbHelper = new DataBaseHelper(getActivity());
+        searchField = view.findViewById(R.id.search);
         listQrCode = dbHelper.getListQR(0);
         list = (ListView)view.findViewById(R.id.history_list);
         filterSwitch = view.findViewById(R.id.filterHistory);
@@ -76,13 +80,34 @@ public class History extends Fragment {
                         ActivityOptions.makeCustomAnimation(getContext(),R.anim.slide_in_right_to_center,R.anim.slide_out_center_to_left).toBundle());          }
         });
 
+        searchField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                String searched = searchField.getText().toString();
+                if(keyCode == KeyEvent.KEYCODE_ENTER) {
+                    if(filterSwitch.getCheckedRadioButtonId() == R.id.created_radio) {
+                        listQrCode = dbHelper.searchListQR(searched, 0);
+                    }
+                    else if(filterSwitch.getCheckedRadioButtonId() == R.id.scanned_radio) {
+                        listQrCode = dbHelper.searchListQR(searched, 1);
+                    }
+                    GeneralHelper.hideKeyboard(getActivity());
+                    createAdapter();
+                    historyAdapter.notifyDataSetChanged();
+                }
+                return false;
+            }
+        });
+
     }
 
     private void onChangeSwitcChange(RadioGroup radioGroup, int idChecked) {
         if (idChecked == R.id.created_radio) {
             listQrCode = dbHelper.getListQR(0);
+            searchField.setText("");
         } else {
             listQrCode = dbHelper.getListQR(1);
+            searchField.setText("");
         }
         createAdapter();
         historyAdapter.notifyDataSetChanged();
