@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     // Initialisation des vues et des écouteurs d'événements
     private void initViews() {
+        //TODO revert to the old way
+
+        //TODO ça plante là
         // Gestion de la navigation inférieure
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_Navigation_View);
         bottomNavigationView.setOnItemSelectedListener(this::onNavigationItemSelected);
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         fromLibraryButton.setOnClickListener(this::onFromLibraryButtonClick);
     }
 
+    //TODO mettre cela dans le "Scanner" class
     // Méthode pour charger le fragment Scanner
     private void loadScannerFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+
+    //TODO Ne pas changer cette fonction, il va avoir beaucoup de conflit avec main si tu changes cette fonction
     // Gestionnaire d'événements pour la navigation inférieure
     public boolean onNavigationItemSelected(MenuItem item) {
         try {
@@ -90,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         loadFragment(new Create(), false);
     }
 
+    //TODO Revert to the old way
     // Méthode pour charger un fragment dans le conteneur
     private boolean loadFragment(Fragment fragment, boolean initializeApp) {
         if (fragment != null) {
@@ -106,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+
+    //TODO mettre cela dans le "Scanner" class
     // Gestionnaire d'événements pour le clic sur le bouton "De ma bibliothèque"
     private void onFromLibraryButtonClick(View view) {
         // Créer un Intent pour ouvrir la galerie de photos
@@ -113,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(galleryIntent, REQUEST_PICK_IMAGE);
     }
 
+    //TODO mettre cela dans le "Scanner" class
     // Méthode pour gérer le résultat de la sélection d'image depuis la bibliothèque de photos
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -129,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //TODO mettre cela dans le "Scanner" class
     // Méthode pour scanner un code QR à partir d'une image
     private void scanQRCodeFromImage(Uri imageUri) {
         // Ajoutez le code nécessaire pour scanner le code QR à partir de l'image ici
