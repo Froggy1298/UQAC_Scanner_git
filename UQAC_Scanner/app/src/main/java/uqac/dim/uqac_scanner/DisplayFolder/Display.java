@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.content.Intent;
 import android.widget.TextView;
+
+import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +24,33 @@ import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Helpers.OnSwipeTouchListener;
 import uqac.dim.uqac_scanner.R;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
+import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
+import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
+import uqac.dim.uqac_scanner.Models.QrCodeModel;
+import uqac.dim.uqac_scanner.R;
+import android.graphics.Bitmap;
+import android.text.TextUtils;
+import android.widget.Toast;
+
+import com.google.android.material.internal.ContextUtils;
+
 
 public class Display extends AppCompatActivity {
+
+    QrCodeModel thisCodeQr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,53 +72,37 @@ public class Display extends AppCompatActivity {
         }
 
         Button downloadButton = findViewById(R.id.download);
-        downloadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Capture de l'écran et enregistrement de l'image
-                captureAndSaveScreen();
-            }
-        });
+        downloadButton.setOnClickListener(this::onClickDownload);
 
-        Button returnButton = findViewById(R.id.btn_return);
-        returnButton.setOnClickListener(this::onClickReturn);
+        ((Button)findViewById(R.id.btn_return))
+                .setOnClickListener(this::onClickReturn);
 
-        ((LinearLayout)findViewById(R.id.theBigOne))
-                .setOnTouchListener(new OnSwipeTouchListener(this) {
-                    public void onSwipeRight() {
-                        onClickReturn(null);
-                    }
-                });
+        ((Button)findViewById(R.id.access))
+                .setOnClickListener(this::onClickAccess);
+    }
 
-        Button accessButton = findViewById(R.id.access);
-        accessButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /* Pour access
-                Intent intent = new Intent(Affichage.this, NouvelleActivite.class); // Remplacez NouvelleActivite.class par le nom de votre nouvelle activité
-                startActivity(intent);
+    private void onClickDownload(View view) {
+    }
 
-                 */
-            }
-        });
+    private void onClickAccess(View view) {
     }
 
     private void displayDetailsFromHistory(int qrIdSelected) {
         // Utiliser qrIdSelected pour récupérer les détails du QR code depuis la base de données
         DataBaseHelper dbHelper = new DataBaseHelper(this);
-        QrCodeModel qrCodeModel = dbHelper.getQR(qrIdSelected);
+        thisCodeQr = dbHelper.getQR(qrIdSelected);
 
         // Afficher les détails dans les TextViews
         TextView nameTextView = findViewById(R.id.label_name);
         TextView dateTextView = findViewById(R.id.label_date);
         TextView descriptionTextView = findViewById(R.id.description);
 
-        nameTextView.setText(qrCodeModel.getName());
-        displayDate(qrCodeModel.getDateCreation(), dateTextView); // Appeler displayDate() avec le TextView pour afficher la date
-        descriptionTextView.setText(qrCodeModel.getDescription());
+        nameTextView.setText(thisCodeQr.getName());
+        displayDate(thisCodeQr.getDateCreation(), dateTextView); // Appeler displayDate() avec le TextView pour afficher la date
+        descriptionTextView.setText(thisCodeQr.getDescription());
 
         // Afficher le code QR dans l'ImageView
-        displayQRCode(qrCodeModel.getCodeQR());
+        displayQRCode(thisCodeQr.getCodeQR());
     }
 
 
