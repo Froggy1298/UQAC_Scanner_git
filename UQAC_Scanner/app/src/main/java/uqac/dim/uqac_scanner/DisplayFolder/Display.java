@@ -1,4 +1,5 @@
 package uqac.dim.uqac_scanner.DisplayFolder;
+import android.net.Uri;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.BitmapFactory;
@@ -11,7 +12,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.content.Intent;
 import android.widget.TextView;
-import uqac.dim.uqac_scanner.EditFolder.Edit;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.R;
+
 
 public class Display extends AppCompatActivity {
 
@@ -68,10 +69,20 @@ public class Display extends AppCompatActivity {
     }
 
     private void onClickAccess(View view) {
-        Intent intent = new Intent(Display.this, Edit.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
-        finish();
+        if (thisCodeQr != null) {
+            // Récupérer URL
+            String url = thisCodeQr.getUrl();
+
+            // Vérifier URL
+            if (url != null && !url.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "URL invalide", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Aucun QR code sélectionné", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void displayDetailsFromHistory(int qrIdSelected) {
@@ -84,7 +95,7 @@ public class Display extends AppCompatActivity {
         TextView descriptionTextView = findViewById(R.id.description);
 
         nameTextView.setText(thisCodeQr.getName());
-        displayDate(thisCodeQr.getDateCreation(), dateTextView); // Appeler displayDate() avec le TextView pour afficher la date
+        displayDate(thisCodeQr.getDateCreation(), dateTextView);
         descriptionTextView.setText(thisCodeQr.getDescription());
 
         // Afficher le code QR dans l'ImageView
