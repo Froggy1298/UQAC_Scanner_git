@@ -5,11 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".ScannerFolder.Scanner">
 
+    <!-- PreviewView pour afficher la prévisualisation de la caméra -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/viewFinder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <!-- ImageView pour afficher l'image capturée -->
     <ImageView
         android:id="@+id/click_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <!-- TextView pour afficher le résultat du scan -->
+    <TextView
+        android:id="@+id/scan_result_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="16dp"
+        android:textColor="#FFFFFF"
+        android:background="#424242"
+        android:text="Résultat du scan ici"
+        android:visibility="gone" /> <!-- Cachez ce TextView jusqu'à ce qu'un résultat de scan soit disponible -->
 
     <!-- Bouton "De ma bibliothèque" en bas -->
     <Button
@@ -20,6 +41,6 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="16dp"
         android:textColor="#FFFFFF"
-        android:background="#1976D2"/>
+        android:background="#1976D2" />
 
 </FrameLayout>
