@@ -147,11 +147,9 @@ public class Display extends AppCompatActivity {
             outputStream.flush();
             outputStream.close();
 
-            // Afficher un message de succès
             Toast.makeText(this, "Image enregistrée avec succès", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Afficher un message d'erreur en cas d'échec
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show();
         }
     }
