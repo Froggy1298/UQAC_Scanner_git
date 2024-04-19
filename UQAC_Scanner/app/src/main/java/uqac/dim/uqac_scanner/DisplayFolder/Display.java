@@ -1,6 +1,8 @@
 package uqac.dim.uqac_scanner.DisplayFolder;
 import android.net.Uri;
-
+import java.util.Locale;
+import java.io.File;
+import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.BitmapFactory;
 import android.widget.ImageView;
@@ -13,10 +15,8 @@ import android.widget.Toast;
 import android.content.Intent;
 import android.widget.TextView;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
@@ -58,15 +58,27 @@ public class Display extends AppCompatActivity {
     }
 
     private void onClickDownload(View view) {
-        ImageView qrCodeImageView = findViewById(R.id.affichageqr);
+        if (thisCodeQr != null) {
+            // Récupérer l'ImageView
+            ImageView qrCodeImageView = findViewById(R.id.affichageqr);
 
-        // Obtenir le Bitmap
-        BitmapDrawable bitmapDrawable = (BitmapDrawable) qrCodeImageView.getDrawable();
-        Bitmap bitmap = bitmapDrawable.getBitmap();
+            // Obtenir le drawable
+            BitmapDrawable drawable = (BitmapDrawable) qrCodeImageView.getDrawable();
 
-        // Enregistrer le Bitmap
-        saveBitmapToGallery(bitmap);
+            if (drawable != null) {
+                // Convertir le drawable en bitmap
+                Bitmap bitmap = drawable.getBitmap();
+
+                // Enregistrer le bitmap dans la mémoire externe
+                saveImageQrCode(bitmap);
+            } else {
+                Toast.makeText(this, "Aucune image à télécharger", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "Aucun QR code sélectionné", Toast.LENGTH_SHORT).show();
+        }
     }
+
 
     private void onClickAccess(View view) {
         if (thisCodeQr != null) {
@@ -113,22 +125,37 @@ public class Display extends AppCompatActivity {
     }
 
 
-    private void saveBitmapToGallery(Bitmap bitmap) {
-        String galleryPath = "/mnt/sdcard/Screenshot.png";
+    private void saveImageQrCode(Bitmap bitmap) {
+        // Définir un nom de fichier unique basé sur la date actuelle
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
+        String fileName = "QRCode_" + sdf.format(new Date()) + ".png";
+
+        // Chemin du dossier de destination dans la mémoire externe
+        File directory = new File(getExternalFilesDir(null) + File.separator + "Images");
+        if (!directory.exists()) {
+            directory.mkdirs(); // Créer le dossier s'il n'existe pas
+        }
 
         try {
-            File file = new File(galleryPath);
+            // Créer le fichier de destination
+            File file = new File(directory, fileName);
+            file.createNewFile();
+
+            // Écrire le bitmap dans le fichier de destination
             OutputStream outputStream = new FileOutputStream(file);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-
+            outputStream.flush();
             outputStream.close();
 
-            Toast.makeText(this, "Image enrigistrée", Toast.LENGTH_SHORT).show();
+            // Afficher un message de succès
+            Toast.makeText(this, "Image enregistrée avec succès", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            Toast.makeText(this, "Nooooo", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
+            // Afficher un message d'erreur en cas d'échec
+            Toast.makeText(this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 
