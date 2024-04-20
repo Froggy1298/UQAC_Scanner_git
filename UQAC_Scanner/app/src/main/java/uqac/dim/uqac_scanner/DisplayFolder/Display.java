@@ -183,7 +183,7 @@ public class Display extends AppCompatActivity {
         String dateString = sdf.format(date);
 
         // Afficher
-        textView.setText(dateString);
+        textView.setText(getString(R.string.date)+ ' ' + dateString);
     }
 
 
