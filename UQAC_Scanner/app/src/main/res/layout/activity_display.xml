@@ -14,7 +14,8 @@
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-39dp">
+        tools:layout_editor_absoluteX="-39dp"
+        android:background="@color/Blue">
 
         <TextView
             android:id="@+id/label_name"
@@ -88,6 +89,7 @@
                 android:id="@+id/btn_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
                 android:textColor="@color/black"
@@ -101,7 +103,8 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/download"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="6"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
