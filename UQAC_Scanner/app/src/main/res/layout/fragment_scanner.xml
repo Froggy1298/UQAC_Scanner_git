@@ -7,18 +7,20 @@
 
     <!-- PreviewView pour afficher la prévisualisation de la caméra -->
     <androidx.camera.view.PreviewView
-        android:id="@+id/viewFinder"
+        android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:contentDescription="@string/camera_preview_description" />
 
-    <!-- ImageView pour afficher l'image capturée -->
+    <!-- ImageView pour afficher l'image capturée  -->
     <ImageView
         android:id="@+id/click_image"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="centerCrop"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:contentDescription="@string/captured_image_description" />
 
     <!-- TextView pour afficher le résultat du scan -->
     <TextView
@@ -29,18 +31,20 @@
         android:padding="16dp"
         android:textColor="#FFFFFF"
         android:background="#424242"
-        android:text="Résultat du scan ici"
-        android:visibility="gone" /> <!-- Cachez ce TextView jusqu'à ce qu'un résultat de scan soit disponible -->
+        android:text="@string/scan_result_text"
+        android:visibility="gone"
+        android:contentDescription="@string/scan_result_description" />
 
-    <!-- Bouton "De ma bibliothèque" en bas -->
+    <!-- Bouton "De ma bibliothèque" pour sélectionner une image -->
     <Button
         android:id="@+id/from_library_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="De ma bibliothèque"
+        android:text="@string/from_library"
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="16dp"
         android:textColor="#FFFFFF"
-        android:background="#1976D2" />
+        android:background="#1976D2"
+        android:contentDescription="@string/from_library_description" />
 
 </FrameLayout>
