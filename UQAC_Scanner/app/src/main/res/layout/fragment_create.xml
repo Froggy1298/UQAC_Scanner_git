@@ -65,18 +65,19 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
+
+
             <EditText
                 android:id="@+id/field_desc"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:textSize="20sp"
-                android:padding="5dp"
-                android:inputType="textMultiLine"
-                android:gravity="start"
-                android:background="@color/white"
                 android:layout_marginBottom="40dp"
-                android:hint="@string/entrer_la_description_ici"/>
-
+                android:background="@color/white"
+                android:gravity="start"
+                android:hint="@string/entrer_la_description_ici"
+                android:inputType="textMultiLine"
+                android:padding="5dp"
+                android:textSize="20sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/but_confirm_create"

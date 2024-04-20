@@ -18,7 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import uqac.dim.uqac_scanner.CreateFolder.Create;
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
-//import uqac.dim.uqac_scanner.Helpers.OnSwipeTouchListener;
+import uqac.dim.uqac_scanner.Helpers.OnSwipeTouchListener;
 import uqac.dim.uqac_scanner.HistoryFolder.History;
 import uqac.dim.uqac_scanner.ScannerFolder.Scanner;
 
@@ -37,17 +37,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Initialisation de la base de données
+        dataBaseHelper = new DataBaseHelper(MainActivity.this);
+
+
 
         ((BottomNavigationView)findViewById(R.id.bottom_Navigation_View))
                 .setOnItemSelectedListener(this::onNavigationItemSelected);
 
         ((FloatingActionButton)findViewById(R.id.but_Create))
                 .setOnClickListener(this::onClickCreate);
-        
-        // Initialisation de la base de données
-        dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
-        //loadFragment(new Scanner(), true, R.anim.fade_in, R.anim.fade_out);
+        ((FrameLayout)findViewById(R.id.frame_layout))
+                .setOnTouchListener(new OnSwipeTouchListener(this) {
+                    public void onSwipeRight() {
+                        loadFragment(new Scanner(), false, R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+                    }
+                    public void onSwipeLeft(){
+                        loadFragment(new History(), false, R.anim.slide_in_right_to_center, R.anim.slide_out_center_to_left);
+                    }
+                    public void onSwipeTop() {
+                        loadFragment(new Create(), false, R.anim.fade_in, R.anim.fade_out);
+                    }
+                });
+
+
+        loadFragment(new Scanner(), true, R.anim.fade_in, R.anim.fade_out);
     }
     // Gestionnaire d'événements pour la navigation inférieure
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -58,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
             //Do not use switch case, see reason here
             //https://stackoverflow.com/questions/9092712/switch-case-statement-error-case-expressions-must-be-constant-expression
             if(menuId == R.id.nav_Scanner) {
-                //loadFragment(new Scanner(), false, R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
+                loadFragment(new Scanner(), false, R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
             } else if(menuId == R.id.nav_History) {
-                //loadFragment(new History(), false, R.anim.slide_in_right_to_center, R.anim.slide_out_center_to_left);
+                loadFragment(new History(), false, R.anim.slide_in_right_to_center, R.anim.slide_out_center_to_left);
             }
             return true;
         }
@@ -72,24 +88,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Gestionnaire d'événements pour le clic sur le bouton flottant
-    public void onClickCreate(View view) {
-        loadFragment(new Create(), false);
+    public void onClickCreate(View view)
+    {
+        loadFragment(new Create(), false, R.anim.fade_in, R.anim.fade_out);
     }
 
-    // Méthode pour charger un fragment dans le conteneur
-    private boolean loadFragment(Fragment fragment, boolean initializeApp) {
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            if (initializeApp) {
-                fragmentTransaction.add(R.id.frame_layout, fragment);
-            } else {
-                fragmentTransaction.replace(R.id.frame_layout, fragment);
-            }
-            fragmentTransaction.commit();
-            return true;
+    private void loadFragment(Fragment fragmentToLoad, boolean initializeApp, int enter, int exit)
+    {
+        //TODO test if creating those two fucker before improve the speed of the app
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction()
+                .setCustomAnimations(
+                        enter, // enter
+                        exit   // exit
+        );
+
+        if (initializeApp)
+        {
+            fragmentTransaction.add(R.id.frame_layout, fragmentToLoad);
         }
-        return false;
     }
 }

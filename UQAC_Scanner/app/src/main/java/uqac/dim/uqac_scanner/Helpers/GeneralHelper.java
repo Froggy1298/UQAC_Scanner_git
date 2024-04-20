@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,8 +13,7 @@ import java.util.Date;
 
 public class GeneralHelper {
     public static String getCurrentTimeString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(getCurrentTimeDate());
+        return DateToString(getCurrentTimeDate());
     }
 
     public static Date getCurrentTimeDate() {
@@ -24,6 +24,14 @@ public class GeneralHelper {
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
     }
+
+
+    public static String DateToString(Date thisDate)
+    {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        return formatter.format(thisDate.getTime());
+    }
+
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
