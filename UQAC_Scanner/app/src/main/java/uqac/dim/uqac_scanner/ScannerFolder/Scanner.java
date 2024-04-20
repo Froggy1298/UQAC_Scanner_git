@@ -32,8 +32,11 @@ import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
+import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
 
 @ExperimentalGetImage
@@ -153,5 +156,24 @@ public class Scanner extends Fragment {
     // Méthode pour traiter le résultat du code-barres
     private void handleResult(String resultText) {
         Toast.makeText(getContext(), "QR Code result: " + resultText, Toast.LENGTH_LONG).show(); // Affichage du résultat du code-barres
+
+        // Création d'un nouveau modèle QR Code
+        QrCodeModel qrCode = new QrCodeModel();
+        qrCode.setName("Scanned QR Code");  // Nom du code QR
+        qrCode.setUrl(resultText);  // L'URL ou le texte du QR
+        qrCode.setDescription("Scanned QR code from app");  // Description
+        qrCode.setDateCreation(new Date());  // Date de création
+        qrCode.setDateEdit(new Date());  // Date d'édition
+        qrCode.setIsScanned(true);  // Marqué comme scanné
+
+        // Instance de DataBaseHelper pour accéder à la base de données
+        DataBaseHelper dbHelper = new DataBaseHelper(getContext());
+
+        // Enregistrement du QR code dans la base de données
+        if (dbHelper.addCreatedQR(qrCode)) {
+            Toast.makeText(getContext(), "QR Code saved successfully!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Failed to save QR Code.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
