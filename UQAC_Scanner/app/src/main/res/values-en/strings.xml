@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="telecharger">Download</string>
+    <string name="app_name">UQAC_Scanner</string>
+    <string name="search">Search</string>
+    <string name="scanned">Scan</string>
+    <string name="created">Create</string>
+    <string name="edit_icon">Edit icon</string>
+    <string name="confirmer">Confirm</string>
+    <string name="entrer_la_description_ici">Enter description here</string>
+    <string name="description">Description</string>
+    <string name="entrer_l_url_ici">Enter url here</string>
+    <string name="url">URL</string>
+    <string name="entrer_le_nom_ici">Enter name here</string>
+    <string name="nom">Name</string>
+    <string name="date">Created 00/00/000</string>
+    <string name="acceder">Open</string>
+</resources>

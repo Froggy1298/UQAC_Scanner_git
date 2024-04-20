@@ -3,7 +3,7 @@
     <string name="search">Recherche</string>
     <string name="scanned">Scanner</string>
     <string name="created">Créer</string>
-    <string name="edit_icon">edit icon</string>
+    <string name="edit_icon">Modifier l\'icon</string>
     <string name="confirmer">Confirmer</string>
     <string name="entrer_la_description_ici">Entrer la description ici</string>
     <string name="description">Description</string>
@@ -13,4 +13,5 @@
     <string name="nom">Nom</string>
     <string name="date">Crée le 00/00/000</string>
     <string name="acceder">Accéder</string>
+    <string name="telecharger">Télécharger</string>
 </resources>

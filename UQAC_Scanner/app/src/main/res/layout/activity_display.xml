@@ -106,7 +106,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/white"
-                android:text="télecharger"
+                android:text="@string/telecharger"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
