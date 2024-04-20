@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:text="@string/from_library"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="200dp"
         android:textColor="#FFFFFF"
         android:background="#1976D2"
         android:contentDescription="@string/from_library_description" />
