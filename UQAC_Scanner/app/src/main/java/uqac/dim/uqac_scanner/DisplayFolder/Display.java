@@ -165,7 +165,7 @@ public class Display extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis() + ".jpg");
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, "QRCode_" + System.currentTimeMillis() + ".jpg");
         contentValues.put(MediaStore.Images.Media.MIME_TYPE,"images/*");
         Uri uri = contentResolver.insert(images, contentValues);
 
