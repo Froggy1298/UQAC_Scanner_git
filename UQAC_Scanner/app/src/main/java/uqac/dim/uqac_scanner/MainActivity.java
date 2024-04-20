@@ -41,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialisation de la base de données
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
 
-
-
         ((BottomNavigationView)findViewById(R.id.bottom_Navigation_View))
                 .setOnItemSelectedListener(this::onNavigationItemSelected);
 
@@ -107,5 +105,10 @@ public class MainActivity extends AppCompatActivity {
         {
             fragmentTransaction.add(R.id.frame_layout, fragmentToLoad);
         }
+        else
+        {
+            fragmentTransaction.replace(R.id.frame_layout, fragmentToLoad);
+        }
+        fragmentTransaction.commit();
     }
 }
