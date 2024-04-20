@@ -86,20 +86,32 @@ public class Display extends AppCompatActivity {
 
 
     private void onClickAccess(View view) {
-        if (thisCodeQr != null) {
-            // Récupérer URL
-            String url = thisCodeQr.getUrl();
-
-            // Vérifier URL
-            if (url != null && !url.isEmpty()) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "URL invalide", Toast.LENGTH_SHORT).show();
-            }
-        } else {
+        if (thisCodeQr == null)
+        {
             Toast.makeText(this, "Aucun QR code sélectionné", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        // Récupérer URL
+        String url = thisCodeQr.getUrl();
+
+        if (url == null && url.isEmpty())
+        {
+            Toast.makeText(this, "Aucun QR code sélectionné", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Intent intent;
+
+        if(url.contains("https://"))
+        {
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        }
+        else{
+            String tempURL = "https://www.google.ca/search?q=" + url;
+            intent = new Intent(Intent.ACTION_VIEW, Uri.parse(tempURL));
+        }
+        startActivity(intent);
     }
 
     private void displayDetailsFromHistory(int qrIdSelected) {
