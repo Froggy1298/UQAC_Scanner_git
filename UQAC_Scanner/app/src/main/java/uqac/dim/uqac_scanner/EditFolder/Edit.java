@@ -17,7 +17,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.Date;
 
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
@@ -72,6 +79,7 @@ public class Edit extends AppCompatActivity{
                 });
 
 
+
         LoadDataFromQrCode();
     }
 
@@ -116,8 +124,34 @@ public class Edit extends AppCompatActivity{
         this.overridePendingTransition(R.anim.slide_in_left_to_center, R.anim.slide_out_center_to_right);
     }
 
+
+
+
     private void onClickDelete(View view) {
-        dbHelper.deleteQRCode(thisCodeQr.getID());
-        onClickReturn(view);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onClickDialog(dialog,which, view);
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Êtes-vous sûr?")
+                .setPositiveButton("Oui", dialogClickListener)
+                .setNegativeButton("Non", dialogClickListener).show();
+
+
+    }
+    public void onClickDialog(DialogInterface dialog, int witch, View view)
+    {
+        switch (witch){
+            case DialogInterface.BUTTON_POSITIVE:
+                dbHelper.deleteQRCode(thisCodeQr.getID());
+                onClickReturn(view);
+                break;
+            case DialogInterface.BUTTON_NEGATIVE:
+                dialog.dismiss();
+                break;
+        }
     }
 }
