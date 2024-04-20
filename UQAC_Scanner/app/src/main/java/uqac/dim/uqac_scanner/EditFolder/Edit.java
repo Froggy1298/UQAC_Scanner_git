@@ -43,6 +43,9 @@ public class Edit extends AppCompatActivity{
         setContentView(R.layout.activity_edit);
 
         dbHelper = new DataBaseHelper(this);
+
+
+
         String tempStringDataIntent = getIntent().getStringExtra("QR_ID_SELECTED");
         thisCodeQr = dbHelper.getQR(Integer.parseInt(tempStringDataIntent));
 
