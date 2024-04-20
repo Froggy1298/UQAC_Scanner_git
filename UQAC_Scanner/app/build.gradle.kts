@@ -42,13 +42,16 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.journeyapps:zxing-android-embedded:4.1.0")
-    implementation("androidx.camera:camera-camera2:1.3.3")
+
+    // ML Kit Barcode Scanning
+    implementation ("com.google.mlkit:barcode-scanning:17.2.0")
+
+
 
     // CameraX core library
     implementation("androidx.camera:camera-camera2:1.3.3")
     implementation("androidx.camera:camera-lifecycle:1.3.3")
     implementation("androidx.camera:camera-view:1.3.3")
-
 
     // Testing libraries
     testImplementation("junit:junit:4.13.2")
