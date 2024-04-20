@@ -1,10 +1,13 @@
 package uqac.dim.uqac_scanner.DisplayFolder;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.net.Uri;
 import java.util.Locale;
 import java.io.File;
 import java.io.IOException;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.BitmapFactory;
+import android.provider.MediaStore;
 import android.widget.ImageView;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.Bitmap;
@@ -19,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Objects;
+
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.R;
 
@@ -126,36 +131,39 @@ public class Display extends AppCompatActivity {
 
 
     private void saveImageQrCode(Bitmap bitmap) {
-        // Définir un nom de fichier unique basé sur la date actuelle
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
-        String fileName = "QRCode_" + sdf.format(new Date()) + ".png";
-
-        // Chemin du dossier de destination dans la mémoire externe
-        File directory = new File(getExternalFilesDir(null) + File.separator + "Images");
-        if (!directory.exists()) {
-            directory.mkdirs(); // Créer le dossier s'il n'existe pas
-        }
-
-        try {
-            // Créer le fichier de destination
-            File file = new File(directory, fileName);
-            file.createNewFile();
-
-            // Écrire le bitmap dans le fichier de destination
-            OutputStream outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            outputStream.flush();
-            outputStream.close();
-
+        ContentResolver contentResolver = getContentResolver();
+        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        //Valeur Spécifique aux photos
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis() + ".jpg");
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE,"images/*");
+        Uri uri = contentResolver.insert(images, contentValues);
+        //Essaie de sauvegarder
+        try{
+            OutputStream outputStream = contentResolver.openOutputStream(Objects.requireNonNull(uri));
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100, outputStream);
             Toast.makeText(this, "Image enregistrée avec succès", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }catch (Exception e){
             Toast.makeText(this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show();
         }
     }
 
 
+    private void saveGallery(Bitmap bitmap) {
+        ContentResolver contentResolver = getContentResolver();
+        Uri images = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, System.currentTimeMillis() + ".jpg");
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE,"images/*");
+        Uri uri = contentResolver.insert(images, contentValues);
 
+        try{
+            OutputStream outputStream = contentResolver.openOutputStream(Objects.requireNonNull(uri));
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100, outputStream);
+        }catch (Exception e){
+            Toast.makeText(this, "Erreur lors de l'enregistrement de l'image", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void displayDate(Date date, TextView textView) {
         // Formater la date
