@@ -3,6 +3,7 @@ package uqac.dim.uqac_scanner.ScannerFolder;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -35,7 +36,9 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
+import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
+import uqac.dim.uqac_scanner.Helpers.GeneralHelper;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 import uqac.dim.uqac_scanner.R;
 
@@ -157,13 +160,18 @@ public class Scanner extends Fragment {
     private void handleResult(String resultText) {
         Toast.makeText(getContext(), "QR Code result: " + resultText, Toast.LENGTH_LONG).show(); // Affichage du résultat du code-barres
 
+        Bitmap tempBitmap = BitMapHelper.CreateBitMapFromString(resultText);
+        byte[] tempBitmapByteArray = BitMapHelper.getBytes(tempBitmap);
+
+
         // Création d'un nouveau modèle QR Code
         QrCodeModel qrCode = new QrCodeModel();
-        qrCode.setName("Scanned QR Code");  // Nom du code QR
+        qrCode.setName("Scanned " + GeneralHelper.getCurrentTimeString());  // Nom du code QR
+        qrCode.setCodeQR(tempBitmapByteArray);
         qrCode.setUrl(resultText);  // L'URL ou le texte du QR
         qrCode.setDescription("Scanned QR code from app");  // Description
-        qrCode.setDateCreation(new Date());  // Date de création
-        qrCode.setDateEdit(new Date());  // Date d'édition
+        qrCode.setDateCreation(GeneralHelper.getCurrentTimeDate());  // Date de création
+        qrCode.setDateEdit(GeneralHelper.getCurrentTimeDate()   );  // Date d'édition
         qrCode.setIsScanned(true);  // Marqué comme scanné
 
         // Instance de DataBaseHelper pour accéder à la base de données
