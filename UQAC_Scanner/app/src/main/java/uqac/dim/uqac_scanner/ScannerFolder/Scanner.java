@@ -45,57 +45,54 @@ import uqac.dim.uqac_scanner.R;
 @ExperimentalGetImage
 public class Scanner extends Fragment {
 
-    private PreviewView previewView; // Vue pour prévisualiser la caméra
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture; // Future pour la fourniture de la caméra
-    private static final int REQUEST_GALLERY = 1002; // Identifiant pour la demande de galerie
+    private PreviewView previewView;
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
+    private static final int REQUEST_GALLERY = 1002;
+    private boolean isProcessing = false; // Flag pour contrôler le traitement répété
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_scanner, container, false);
-        previewView = view.findViewById(R.id.previewView); // Récupération de la vue de prévisualisation de la caméra
-        Button fromLibraryButton = view.findViewById(R.id.from_library_button); // Bouton pour ouvrir la galerie
-        fromLibraryButton.setOnClickListener(v -> openGallery()); // Définition de l'action du bouton
+        previewView = view.findViewById(R.id.previewView);
+        Button fromLibraryButton = view.findViewById(R.id.from_library_button);
+        fromLibraryButton.setOnClickListener(v -> openGallery());
 
-        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext()); // Obtention de la future fourniture de la caméra
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext());
         cameraProviderFuture.addListener(() -> {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                startCamera(); // Démarrage de la caméra si la permission est accordée
+                startCamera();
             } else {
-                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1001); // Demande de permission si elle n'est pas accordée
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, 1001);
             }
         }, ContextCompat.getMainExecutor(requireContext()));
 
         return view;
     }
 
-    // Méthode pour ouvrir la galerie d'images
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_GALLERY);
     }
 
-    // Méthode appelée après la sélection d'une image depuis la galerie
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_GALLERY && resultCode == getActivity().RESULT_OK && data != null) {
             Uri imageUri = data.getData();
-            analyzeImageFromUri(imageUri); // Analyse de l'image sélectionnée
+            analyzeImageFromUri(imageUri);
         }
     }
 
-    // Méthode pour analyser une image depuis l'URI
     private void analyzeImageFromUri(Uri imageUri) {
         try {
-            InputImage image = InputImage.fromFilePath(requireContext(), imageUri); // Création d'une InputImage à partir de l'URI
-            BarcodeScanner scanner = BarcodeScanning.getClient(); // Création d'un scanner de codes-barres
-
+            InputImage image = InputImage.fromFilePath(requireContext(), imageUri);
+            BarcodeScanner scanner = BarcodeScanning.getClient();
             scanner.process(image)
                     .addOnSuccessListener(barcodes -> {
                         for (Barcode barcode : barcodes) {
                             String rawValue = barcode.getRawValue();
-                            handleResult(rawValue); // Traitement du résultat du code-barres
+                            handleResult(rawValue);
                         }
                     })
                     .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to analyze image.", Toast.LENGTH_SHORT).show());
@@ -105,79 +102,75 @@ public class Scanner extends Fragment {
         }
     }
 
-    // Méthode pour démarrer la caméra
     private void startCamera() {
         try {
-            ProcessCameraProvider cameraProvider = cameraProviderFuture.get(); // Obtention du fournisseur de caméra
-            setupCamera(cameraProvider); // Configuration de la caméra
+            ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
+            setupCamera(cameraProvider);
         } catch (ExecutionException | InterruptedException e) {
             Thread.currentThread().interrupt();
             Toast.makeText(getContext(), "Error starting camera", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Méthode pour configurer la caméra
     private void setupCamera(ProcessCameraProvider cameraProvider) {
         BarcodeScannerOptions options = new BarcodeScannerOptions.Builder()
                 .setBarcodeFormats(Barcode.FORMAT_QR_CODE)
                 .build();
-        BarcodeScanner scanner = BarcodeScanning.getClient(options); // Création d'un scanner de codes-barres
+        BarcodeScanner scanner = BarcodeScanning.getClient(options);
 
         CameraSelector cameraSelector = new CameraSelector.Builder()
                 .requireLensFacing(CameraSelector.LENS_FACING_BACK)
                 .build();
 
-        Preview preview = new Preview.Builder().build(); // Prévisualisation de la caméra
-        preview.setSurfaceProvider(previewView.getSurfaceProvider()); // Définition du fournisseur de surface pour la prévisualisation
+        Preview preview = new Preview.Builder().build();
+        preview.setSurfaceProvider(previewView.getSurfaceProvider());
 
         ImageAnalysis imageAnalysis = new ImageAnalysis.Builder()
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .build(); // Analyse d'image
+                .build();
 
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), imageProxy -> {
             @NonNull Image image = imageProxy.getImage();
-            if (image != null) {
+            if (image != null && !isProcessing) {
+                isProcessing = true; // Start processing
                 InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
                 scanner.process(inputImage)
                         .addOnSuccessListener(barcodes -> {
                             for (Barcode barcode : barcodes) {
                                 String rawValue = barcode.getRawValue();
-                                handleResult(rawValue); // Traitement du résultat du code-barres
+                                handleResult(rawValue);
                             }
                         })
                         .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to process barcode", Toast.LENGTH_SHORT).show())
-                        .addOnCompleteListener(task -> imageProxy.close());
+                        .addOnCompleteListener(task -> {
+                            imageProxy.close();
+                            isProcessing = false; // Reset processing flag
+                        });
             } else {
                 imageProxy.close();
             }
         });
 
         cameraProvider.unbindAll();
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis); // Liaison des composants de la caméra au cycle de vie du fragment
+        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
     }
 
-    // Méthode pour traiter le résultat du code-barres
     private void handleResult(String resultText) {
-        Toast.makeText(getContext(), "QR Code result: " + resultText, Toast.LENGTH_LONG).show(); // Affichage du résultat du code-barres
+        Toast.makeText(getContext(), "QR Code result: " + resultText, Toast.LENGTH_LONG).show();
 
         Bitmap tempBitmap = BitMapHelper.CreateBitMapFromString(resultText);
         byte[] tempBitmapByteArray = BitMapHelper.getBytes(tempBitmap);
 
-
-        // Création d'un nouveau modèle QR Code
         QrCodeModel qrCode = new QrCodeModel();
-        qrCode.setName("Scanned " + GeneralHelper.getCurrentTimeString());  // Nom du code QR
+        qrCode.setName("Scanned " + GeneralHelper.getCurrentTimeString());
         qrCode.setCodeQR(tempBitmapByteArray);
-        qrCode.setUrl(resultText);  // L'URL ou le texte du QR
-        qrCode.setDescription("Scanned QR code from app");  // Description
-        qrCode.setDateCreation(GeneralHelper.getCurrentTimeDate());  // Date de création
-        qrCode.setDateEdit(GeneralHelper.getCurrentTimeDate()   );  // Date d'édition
-        qrCode.setIsScanned(true);  // Marqué comme scanné
+        qrCode.setUrl(resultText);
+        qrCode.setDescription("Scanned QR code from app");
+        qrCode.setDateCreation(GeneralHelper.getCurrentTimeDate());
+        qrCode.setDateEdit(GeneralHelper.getCurrentTimeDate());
+        qrCode.setIsScanned(true);
 
-        // Instance de DataBaseHelper pour accéder à la base de données
         DataBaseHelper dbHelper = new DataBaseHelper(getContext());
-
-        // Enregistrement du QR code dans la base de données
         if (dbHelper.addCreatedQR(qrCode)) {
             Toast.makeText(getContext(), "QR Code saved successfully!", Toast.LENGTH_SHORT).show();
         } else {
