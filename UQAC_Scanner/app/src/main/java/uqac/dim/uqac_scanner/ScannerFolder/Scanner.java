@@ -33,7 +33,6 @@ import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import uqac.dim.uqac_scanner.Helpers.BitMapHelper;
@@ -113,7 +112,7 @@ public class Scanner extends Fragment {
 
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), imageProxy -> {
             @NonNull Image image = imageProxy.getImage();
-            if (image != null && (lastScannedCode == null || !lastScannedCode.equals(lastScannedCode))) {
+            if (image != null) {
                 InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
                 scanner.process(inputImage)
                         .addOnSuccessListener(barcodes -> {
@@ -134,6 +133,27 @@ public class Scanner extends Fragment {
 
         cameraProvider.unbindAll();
         cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis);
+    }
+
+    private void analyzeImageFromUri(Uri imageUri) {
+        try {
+            InputImage image = InputImage.fromFilePath(requireContext(), imageUri);
+            BarcodeScanner scanner = BarcodeScanning.getClient();
+            scanner.process(image)
+                    .addOnSuccessListener(barcodes -> {
+                        for (Barcode barcode : barcodes) {
+                            String rawValue = barcode.getRawValue();
+                            if (!rawValue.equals(lastScannedCode)) {
+                                lastScannedCode = rawValue;
+                                handleResult(rawValue);
+                            }
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to analyze image.", Toast.LENGTH_SHORT).show());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Failed to read image.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void handleResult(String resultText) {
