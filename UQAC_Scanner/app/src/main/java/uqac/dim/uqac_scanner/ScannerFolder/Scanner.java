@@ -45,10 +45,10 @@ import uqac.dim.uqac_scanner.R;
 @ExperimentalGetImage
 public class Scanner extends Fragment {
 
-    private PreviewView previewView;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    private static final int REQUEST_GALLERY = 1002;
-    private boolean isProcessing = false; // Flag pour contrôler le traitement répété
+    private PreviewView previewView; // Vue pour prévisualiser la caméra
+    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture; // Future pour obtenir l'instance du fournisseur de caméra
+    private static final int REQUEST_GALLERY = 1002; // Identifiant pour la demande de sélection d'image depuis la galerie
+    private String lastScannedCode = null; // Stocke le dernier code QR scanné pour éviter les doublons
 
     @Nullable
     @Override
@@ -84,24 +84,6 @@ public class Scanner extends Fragment {
         }
     }
 
-    private void analyzeImageFromUri(Uri imageUri) {
-        try {
-            InputImage image = InputImage.fromFilePath(requireContext(), imageUri);
-            BarcodeScanner scanner = BarcodeScanning.getClient();
-            scanner.process(image)
-                    .addOnSuccessListener(barcodes -> {
-                        for (Barcode barcode : barcodes) {
-                            String rawValue = barcode.getRawValue();
-                            handleResult(rawValue);
-                        }
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to analyze image.", Toast.LENGTH_SHORT).show());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(getContext(), "Failed to read image.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void startCamera() {
         try {
             ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
@@ -131,21 +113,20 @@ public class Scanner extends Fragment {
 
         imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(getContext()), imageProxy -> {
             @NonNull Image image = imageProxy.getImage();
-            if (image != null && !isProcessing) {
-                isProcessing = true; // Start processing
+            if (image != null && (lastScannedCode == null || !lastScannedCode.equals(lastScannedCode))) {
                 InputImage inputImage = InputImage.fromMediaImage(image, imageProxy.getImageInfo().getRotationDegrees());
                 scanner.process(inputImage)
                         .addOnSuccessListener(barcodes -> {
                             for (Barcode barcode : barcodes) {
                                 String rawValue = barcode.getRawValue();
-                                handleResult(rawValue);
+                                if (!rawValue.equals(lastScannedCode)) {
+                                    lastScannedCode = rawValue;
+                                    handleResult(rawValue);
+                                }
                             }
                         })
                         .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to process barcode", Toast.LENGTH_SHORT).show())
-                        .addOnCompleteListener(task -> {
-                            imageProxy.close();
-                            isProcessing = false; // Reset processing flag
-                        });
+                        .addOnCompleteListener(task -> imageProxy.close());
             } else {
                 imageProxy.close();
             }
