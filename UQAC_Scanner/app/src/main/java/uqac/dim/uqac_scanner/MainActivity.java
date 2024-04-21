@@ -28,6 +28,7 @@ import java.util.List;
 import uqac.dim.uqac_scanner.Helpers.DataBaseHelper;
 import uqac.dim.uqac_scanner.Models.QrCodeModel;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private DataBaseHelper dataBaseHelper;
@@ -37,58 +38,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        // Initialisation de la base de données
         dataBaseHelper = new DataBaseHelper(MainActivity.this);
-
-
-        //Date today =  Calendar.getInstance().getTime();
-        //byte[] image = new byte[6];
-        //boolean result  = dataBaseHelper.addCreatedQR(new QrCodeModel("mommyy","https://youtu.be/aOLxQGLJouI?si=GfudDEP9MVLdZjQA","desc", image,today, today, false));
-        //Log.e("DIM", "QR Code Created " + result);
-
-        //TODO TEST ICI POUR LES DATE ET ID
-        //List<QrCodeModel> allQR = dataBaseHelper.getAllQR();
-        //for (int x = 0;x<allQR.size();x++)
-        //{
-        //    Log.e("LOG", String.valueOf(allQR.get(x).getID()));
-        //    Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateCreation()));
-        //    Log.e("LOG", GeneralHelper.DateToString(allQR.get(x).getDateEdit()));
-        //    Log.e("LOG", allQR.get(x).getName());
-        //    Log.e("LOG", allQR.get(x).getDescription());
-        //    Log.e("LOG", allQR.get(x).getUrl());
-        //    Bitmap test = BitMapHelper.getImage(allQR.get(x).getCodeQR());
-        //    Log.e("LOG", "----------");
-        //}
-
-        //TODO TEST ICI POUR MES FONCTION DATE
-        //Date test1 = GeneralHelper.getCurrentTimeDate();
-        //String test2 = GeneralHelper.getCurrentTimeString();
-        //String test3 = GeneralHelper.DateToString(test1);
-
-
-
-        //List<QrCodeModel> scanned = dataBaseHelper.getListQR(1);
-        /*for (int x = 0;x<allQR.size();x++)
-        {
-            Log.e("LOG", scanned.get(x).getName());
-            Log.e("LOG", scanned.get(x).getDescription());
-            Log.e("LOG", String.valueOf(scanned.get(x).getIsScanned()));
-        }*/
-
-        //List<QrCodeModel> created = dataBaseHelper.getListQR(0);
-        /*for (int x = 0;x<allQR.size();x++)
-        {
-            Log.e("LOG", created.get(x).getName());
-            Log.e("LOG", created.get(x).getDescription());
-            Log.e("LOG", String.valueOf(created.get(x).getIsScanned()));
-        }*/
-
 
         ((BottomNavigationView)findViewById(R.id.bottom_Navigation_View))
                 .setOnItemSelectedListener(this::onNavigationItemSelected);
 
         ((FloatingActionButton)findViewById(R.id.but_Create))
                 .setOnClickListener(this::onClickCreate);
-
 
         ((FrameLayout)findViewById(R.id.frame_layout))
                 .setOnTouchListener(new OnSwipeTouchListener(this) {
@@ -106,9 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new Scanner(), true, R.anim.fade_in, R.anim.fade_out);
     }
-    
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
+    // Gestionnaire d'événements pour la navigation inférieure
+    public boolean onNavigationItemSelected(MenuItem item) {
         try {
             Log.i("LOG", "Enter the try in onNavigationItemSelected");
             int menuId = item.getItemId();
@@ -153,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         {
             fragmentTransaction.replace(R.id.frame_layout, fragmentToLoad);
         }
-
         fragmentTransaction.commit();
     }
 }
