@@ -3,7 +3,7 @@
     <string name="search">Recherche</string>
     <string name="scanned">Scanner</string>
     <string name="created">Créer</string>
-    <string name="edit_icon">edit icon</string>
+    <string name="edit_icon">Modifier l\'icon</string>
     <string name="confirmer">Confirmer</string>
     <string name="entrer_la_description_ici">Entrer la description ici</string>
     <string name="description">Description</string>
@@ -11,14 +11,13 @@
     <string name="url">URL</string>
     <string name="entrer_le_nom_ici">Entrer le nom ici</string>
     <string name="nom">Nom</string>
-    <string name="date">Crée le 00/00/000</string>
+    <string name="date">Créer le </string>
     <string name="acceder">Accéder</string>
-
-
     <string name="camera_preview_description">Aperçu de la caméra</string>
     <string name="captured_image_description">Image capturée</string>
     <string name="scan_result_text">Résultat du scan ici</string>
     <string name="scan_result_description">Texte résultant du scan du QR code</string>
     <string name="from_library">De ma bibliothèque</string>
     <string name="from_library_description">Ouvrir la galerie pour sélectionner une image</string>
+    <string name="telecharger">Télécharger</string>
 </resources>
